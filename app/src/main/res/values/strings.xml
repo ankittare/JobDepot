@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">eCoordinate</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Edit Message</string>
+    <string name="button">Button</string>
+    <string name="tab1">Tab1</string>
+    <string name="tab2">Tab2</string>
+    <string name="tab3">Tab3</string>
+    <string name="title_activity_display_message">DisplayMessage</string>
+    <string name="action_search">Search</string>
+</resources>

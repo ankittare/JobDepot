@@ -2,34 +2,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:gravity="center"
+    android:orientation="vertical">
 
     <EditText
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-
-        android:id="@+id/edit_message"
-        android:hint="@string/edit_message" />
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button"
-        android:text="@string/button"
+        android:id="@+id/username"
+        android:hint="@string/username"
+        android:gravity="center"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:password="true"
+        android:gravity="center"
+        />
+
+    <Button
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/signin"
+        android:text="@string/signin"
         android:onClick="sendMessage"
-        />
+        android:gravity="center"
+        android:layout_gravity="center_horizontal" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button"
-        />
-    <Button
+        android:id="@+id/linkedinsignin"
+        android:text="@string/linkedInSignIn"
+        android:gravity="center"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button"
+        android:gravity="center"
+        android:paddingTop="25dp"
+        android:id="@+id/error_text"
+        android:textColor="@color/red"
         />
 
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/signup"
+        android:text="@string/signup"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="25dp"
+        android:textColor="@color/accent_material_light"
+        />
 
 </LinearLayout>

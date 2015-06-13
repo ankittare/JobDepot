@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.example.ankit.job_depot"
+        applicationId "com.example.ankit.ecoordinator"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
@@ -24,6 +24,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
-
-
 }

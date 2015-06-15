@@ -14,4 +14,6 @@
     <string name="tab3">Tab3</string>
     <string name="title_activity_display_message">DisplayMessage</string>
     <string name="action_search">Search</string>
+    <string name="title_activity_candidate_main_"></string>
+
 </resources>

@@ -156,7 +156,7 @@ public class APIHelper {
      */
     public void getRequest(Context context, String url, ApiListener apiListener) {
         request(context, Request.Method.GET, url, null, apiListener);
-    }
+}
 
     /**
      * Helper method to make authenticated HTTP requests to LinkedIn REST api using POST Method

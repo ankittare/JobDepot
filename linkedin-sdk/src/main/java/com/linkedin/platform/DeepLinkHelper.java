@@ -18,7 +18,7 @@ import com.linkedin.platform.listeners.DeepLinkListener;
  */
 public class DeepLinkHelper {
 
-    public static final int LI_SDK_CROSSLINK_REQUEST_CODE = 103287;
+    public static final int LI_SDK_CROSSLINK_REQUEST_CODE = 3287;
     private static final String TAG = DeepLinkHelper.class.getName();
     private static final String CURRENTLY_LOGGED_IN_MEMBER = "you";
     private static final String DEEPLINK_ERROR_CODE_EXTRA_NAME = "com.linkedin.thirdparty.deeplink.EXTRA_ERROR_CODE";

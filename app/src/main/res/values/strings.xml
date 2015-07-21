@@ -9,11 +9,19 @@
     <string name="signup">New User?Sign Up Right Now!</string>
     <string name="edit_message">Edit Message</string>
     <string name="button">Button</string>
-    <string name="tab1">Tab1</string>
-    <string name="tab2">Tab2</string>
-    <string name="tab3">Tab3</string>
-    <string name="title_activity_display_message">DisplayMessage</string>
-    <string name="action_search">Search</string>
-    <string name="title_activity_candidate_main_"></string>
+    <string name="title_activity_display_message"></string>
 
+    <string name="title_activity_candidate_home">Welcome!</string>
+
+    <string name="title_section1">Jobs</string>
+    <string name="title_section2">Resume</string>
+    <string name="title_section3">Saved Jobs</string>
+    <string name="title_section4">Settings</string>
+
+    <string name="education">Education</string>
+    <string name="exp">Work Experience</string>
+    <string name="skills">Skills</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

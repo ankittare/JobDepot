@@ -14,6 +14,7 @@
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
+
     <permission
         android:name="com.example.ankit.job_depot.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -67,18 +68,15 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-<!--                   IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
+                <!-- IMPORTANT: Change "com.parse.starter" to match your app's package name. -->
                 <category android:name="com.example.ankit.job_depot" />
             </intent-filter>
         </receiver>
 
+
         <activity
-            android:name=".Candidate_main_Activity"
-            android:label="@string/title_activity_candidate_main_"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.ankit.job_depot.MainActivity" />
+            android:name=".candidateHome"
+            android:label="@string/title_activity_candidate_home" >
         </activity>
     </application>
 

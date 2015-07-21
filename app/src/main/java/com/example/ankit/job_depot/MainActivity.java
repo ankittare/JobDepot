@@ -1,15 +1,20 @@
 package com.example.ankit.job_depot;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.linkedin.platform.AccessToken;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -31,6 +36,11 @@ public class MainActivity extends ActionBarActivity {
     public static final String WELCOME_MESSAGE="com.example.ankit.job_depot.Welcome";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        /*
+        Parse Initialisation
+         */
+
         super.onCreate(savedInstanceState);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
@@ -44,6 +54,9 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        checkAuthentication();
+
+
 
     }
 
@@ -51,25 +64,14 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void sendMessage(View view){
+   /* public void sendMessage(View view){
         Intent intent=new Intent(this, Candidate_main_Activity.class);
         EditText username=(EditText)findViewById(R.id.username);
         //Pass password=findViewById(R.id.p)
@@ -78,15 +80,16 @@ public class MainActivity extends ActionBarActivity {
         if(username.getText().toString().equals("ankit")){
             message="Welcome, "+username.getText().toString()+"!";
             intent.putExtra(WELCOME_MESSAGE, message);
-            startActivity(intent);
+
         }
         else{
             TextView textView=(TextView)findViewById(R.id.error_text);
             message="@string/error_text";
             textView.setText(message);
         }
+        startActivity(intent);
     }
-
+    */
     /*
     linkedInAuth: Authorises the app for using the basic profile of the candidate
     The first time this method is called, there is no acess token, so the init method will not have token
@@ -94,35 +97,61 @@ public class MainActivity extends ActionBarActivity {
      */
 
     public void linkedInAuth(View view){
-        final TextView textView=(TextView)findViewById(R.id.testLabel);
-        textView.setTextSize(10);
+        final TextView textView=(TextView)findViewById(R.id.error_text);
 
         final Activity thisActivity = this;
 
         // Build the list of member required permissions
         List<String> scope = new ArrayList<>();
-        scope.add("r_basicprofile");
+        scope.add("r_fullprofile");
         scope.add("w_share");
+
 
         LISessionManager.getInstance(getApplicationContext()).init(thisActivity, buildScope(), new AuthListener() {
             @Override
             public void onAuthSuccess() {
                 // Authentication was successful.  You can now do
                 // other calls with the SDK
-                textView.setText("Init Sucess");
+                Log.i("Init Sucess", String.valueOf(checkAuthentication()));
+                /*
+                Moving to candidate home Page
+                 */
+                startActivity(new Intent(thisActivity, candidateHome.class));
+
             }
 
             @Override
             public void onAuthError(LIAuthError error) {
                 // Handle authentication errors
-                textView.setText("Init Fail");
+                Log.i("Init Failed", String.valueOf(checkAuthentication()));
+                Log.i("Error Message", error.toString());
+                textView.setText("Authentication Failed");
 
             }
         }, true);
+    }
 
+
+    public void signIn(View v){
+        /*
+        Do authentication with PArse Here
+         */
+        startActivity(new Intent(this, candidateHome.class));
+    }
+
+    public boolean checkAuthentication(){
+        LISessionManager liSessionManager=LISessionManager.getInstance(getApplicationContext());
+        LISession liSession=liSessionManager.getSession();
+        return liSession.isValid();
     }
 
     private static Scope buildScope() {
+
         return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
 }

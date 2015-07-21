@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff"
+    >
 
     <EditText
         android:layout_width="wrap_content"
@@ -26,9 +28,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/signin"
         android:text="@string/signin"
-        android:onClick="sendMessage"
         android:gravity="center"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:onClick="signIn"
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -58,10 +61,5 @@
         android:textColor="@color/accent_material_light"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/testLabel"
-        />
 
 </LinearLayout>

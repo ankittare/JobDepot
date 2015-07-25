@@ -42,7 +42,7 @@ class JobDetails{
     }
 }
 
-public class Jobs extends android.support.v4.app.Fragment {
+public class    Jobs extends android.support.v4.app.Fragment {
     private static final String TAG="JOBS FRAGMENT";
     private final List<JobDetails> jobDetails=new ArrayList<JobDetails>();
     private boolean lock=false;

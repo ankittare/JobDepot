@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.ankit.job_depot.JobDepot">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Job Depot"
+        android:id="@+id/labelJobDepot"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#0000FF"
+        android:textSize="@dimen/abc_action_bar_stacked_max_height" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="I am seeking for job"
+        android:id="@+id/labelEmployee"
+        android:layout_below="@+id/labelJobDepot"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:textColor="#FF00FF"
+        android:textSize="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Candidate"
+        android:id="@+id/buttonCandidate"
+        android:width="160dp"
+        android:textSize="20dp"
+        android:textColor="#0000FF"
+        android:background="#ffffc489"
+        android:layout_below="@+id/labelEmployee"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="I am searching candidate"
+        android:id="@+id/labelEmployer"
+        android:layout_marginTop="51dp"
+        android:textColor="#FF00FF"
+        android:textSize="20dp"
+        android:layout_below="@+id/buttonCandidate"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employer"
+        android:id="@+id/buttonEmployer"
+        android:width="160dp"
+        android:textSize="20dp"
+        android:textColor="#0000FF"
+        android:background="#ffffc489"
+        android:layout_below="@+id/labelEmployer"
+        android:layout_alignRight="@+id/buttonCandidate" />
+</RelativeLayout>

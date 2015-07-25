@@ -1,32 +1,20 @@
 package com.example.ankit.job_depot;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.linkedin.platform.AccessToken;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-
 import com.linkedin.platform.LISession;
-import com.linkedin.platform.errors.LIAuthError;
-import com.linkedin.platform.errors.LIDeepLinkError;
-import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
-
-import org.w3c.dom.Text;
+import com.parse.Parse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,14 +31,15 @@ public class MainActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
+        Parse.initialize(this, "A3AYzIzOH98H2ATb1yH5emDypunq4SBNVqRvDMfM", "wyuK61hnDdi2NUcl8DU02aRvP5TfxvGp1r8898mj");
 
         /*
         Parse API callback for saving object
          */
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
+       // ParseUser.enableAutomaticUser();
+        //ParseObject testObject = new ParseObject("TestObject");
+      //  testObject.put("foo", "bar");
+      //  testObject.saveInBackground();
 
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -103,7 +92,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Build the list of member required permissions
         List<String> scope = new ArrayList<>();
-        scope.add("r_fullprofile");
+        scope.add("r_basicprofile");
         scope.add("w_share");
 
 

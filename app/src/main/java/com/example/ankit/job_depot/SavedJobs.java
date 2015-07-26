@@ -45,10 +45,7 @@ public class SavedJobs extends Fragment {
         if(savedjobsData==null)
             savedjobsData=jobsQuery.getSavedJobs("ankitT");
 
-        Log.i(TAG, "After Getting data");
-        for (Map<String, String> map : savedjobsData) {
-            Log.i(TAG, map.entrySet().toString());
-        }
+
         Map<String, List<String>> childData=new HashMap<String, List<String>>();
         for(Map<String, String> entry : savedjobsData){
             groupData.add(entry.get("jobTitle"));
@@ -174,5 +171,4 @@ public class SavedJobs extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
 }

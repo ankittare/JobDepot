@@ -19,7 +19,6 @@ public class JobsQuery {
 
     public List<Map<String,String>> getSavedJobs(String candidateID){
         final List<Map<String, String>> listSavedJobs=new ArrayList<Map<String, String>>();
-        Log.i("Background Query ", "getSavedJobs");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
         query.whereEqualTo("studentCandidateID", candidateID);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -39,15 +38,11 @@ public class JobsQuery {
                         result.put("jobdesc", job.getString("jobDesc"));
                         result.put("jobLocation", job.getString("jobLocation"));
                         listSavedJobs.add(result);
-                        Log.i("getSavedJobs", result.get("jobID"));
 
                     }
 
                 } else {
                     e.printStackTrace();
-                }
-                for (Map<String, String> map : listSavedJobs) {
-                    Log.i("", map.entrySet().toString());
                 }
             }
         });
@@ -59,7 +54,6 @@ public class JobsQuery {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
         final Map<String, String> result=new HashMap<String, String>();
         query.whereEqualTo("objectId", jobID);
-
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, com.parse.ParseException e) {
@@ -85,13 +79,36 @@ public class JobsQuery {
         query.whereEqualTo("objectId", jobID);
         try {
             queryString=query.find();
-            for(ParseObject o:queryString){
-                Log.i("getJobDetails2", o.getObjectId());
-            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
        // notifyAll();
         return queryString.get(0);
+    }
+
+    public List<ParseObject> getJobs() {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+        // synchronized (this){]
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        /*query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
+                if (e == null) {
+                   result.addAll(list);
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });*/
+        for(ParseObject parseObject:result){
+            Log.i("getJobs",parseObject.getString("jobName") );
+        }
+        return result;
     }
 }

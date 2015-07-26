@@ -12,6 +12,11 @@
     <string name="title_activity_display_message"></string>
 
     <string name="title_activity_candidate_home">Welcome!</string>
+    <string name="title_activity_job_depot">Job Depot</string>
+    <string name="title_activity_employer_login">Employer Login</string>
+    <string name="title_activity_employer_sign_up">Employer Sign Up</string>
+
+
 
     <string name="title_section1">Jobs</string>
     <string name="title_section2">Resume</string>

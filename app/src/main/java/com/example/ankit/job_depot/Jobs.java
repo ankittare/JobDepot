@@ -100,7 +100,7 @@ public class Jobs extends android.support.v4.app.Fragment {
             childData.put(jd.getJobTitle(),_temp);
         }
         listView = (ExpandableListView) jobsView.findViewById(R.id.expandableListView);
-        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(getActivity(), groupString, childData);
+        ExpandableListAdapter expListAdapter = new ExpandableListAdapter(getActivity(), groupString, childData);
 
         listView.setAdapter(expListAdapter);
         DisplayMetrics dm = new DisplayMetrics();
@@ -118,7 +118,7 @@ public class Jobs extends android.support.v4.app.Fragment {
     }
 
 
-    public class ExpandableListAdapter extends BaseExpandableListAdapter {
+    private class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         private Activity context;
         private Map<String, List<String>> laptopCollections;
@@ -173,6 +173,7 @@ public class Jobs extends android.support.v4.app.Fragment {
                                      */
                                     ParseObject candidateApplyObject = new ParseObject("candidateList");
                                     candidateApplyObject.put("jobID", jobDetailses.get(childPosition).getId());
+                                    candidateApplyObject.put("status", "Applied");
                                     /*
                                     Get actual acndidate ID
                                      */

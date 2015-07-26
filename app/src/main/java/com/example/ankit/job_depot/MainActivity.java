@@ -3,10 +3,10 @@ package com.example.ankit.job_depot;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.linkedin.platform.LISession;
@@ -14,14 +14,20 @@ import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIAuthError;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
     public static final String WELCOME_MESSAGE="com.example.ankit.job_depot.Welcome";
+    private static final String TAG="Main Activity";
+    private EditText username;
+    private EditText password;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
 
         super.onCreate(savedInstanceState);
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "A3AYzIzOH98H2ATb1yH5emDypunq4SBNVqRvDMfM", "wyuK61hnDdi2NUcl8DU02aRvP5TfxvGp1r8898mj");
+        Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
 
         /*
         Parse API callback for saving object
@@ -41,8 +47,11 @@ public class MainActivity extends ActionBarActivity {
       //  testObject.put("foo", "bar");
       //  testObject.saveInBackground();
 
+        username=(EditText)findViewById(R.id.username);
+        password=(EditText)findViewById(R.id.password);
+
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         checkAuthentication();
 
 
@@ -125,7 +134,28 @@ public class MainActivity extends ActionBarActivity {
         /*
         Do authentication with PArse Here
          */
-        startActivity(new Intent(this, candidateHome.class));
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        query.whereEqualTo("username", "ankit");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
+                if (e == null) {
+                    Log.i("score", "Retrieved " + list.size() + " scores");
+                    String usernameID=(String)list.get(0).get("objectId");
+                    Intent intent=new Intent(getApplicationContext(), candidateHome.class);
+                    intent.putExtra("usernameID", usernameID);
+                    startActivity(intent);
+                } else {
+                    Log.i("score", "Error: " + e.getMessage());
+                }
+            }
+
+
+        });
+       // Intent intent=new Intent(this, candidateHome.class);
+       //startActivity(intent);
+
+
     }
 
     public boolean checkAuthentication(){

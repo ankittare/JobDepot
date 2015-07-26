@@ -89,6 +89,10 @@
             android:name=".EmployerSignUp"
             android:label="@string/title_activity_employer_sign_up" >
         </activity>
+        <activity
+            android:name=".EmployerHome"
+            android:label="@string/title_activity_candidate_home" >
+        </activity>
     </application>
 
 </manifest>

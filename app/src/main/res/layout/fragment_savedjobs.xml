@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/fragment_Container"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -10,12 +12,18 @@
         android:layout_gravity="center_horizontal|top"
         android:textStyle="bold"
         android:typeface="sans"
-        android:layout_marginTop="20dp"
-        android:textColor="#ffff280e" />
+        android:textColor="#ffff280e"
+        android:gravity="center|center_vertical|center_horizontal|clip_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <ExpandableListView
         android:layout_width="wrap_content"
         android:layout_height="450dp"
         android:id="@+id/expandableListView2"
-        android:layout_gravity="center|bottom" />
-</FrameLayout>
+        android:layout_gravity="center|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:paddingTop="70dp"
+        android:layout_below="@+id/textView3" />
+</RelativeLayout>

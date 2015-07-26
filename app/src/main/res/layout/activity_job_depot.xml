@@ -26,7 +26,7 @@
         android:layout_below="@+id/labelJobDepot"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
-        android:textColor="#FF00FF"
+        android:textColor="#ffff280e"
         android:textSize="20dp" />
 
     <Button
@@ -37,7 +37,7 @@
         android:width="160dp"
         android:textSize="20dp"
         android:textColor="#0000FF"
-        android:background="#ffffc489"
+        android:background="#d000ba10"
         android:layout_below="@+id/labelEmployee"
         android:layout_centerHorizontal="true" />
 

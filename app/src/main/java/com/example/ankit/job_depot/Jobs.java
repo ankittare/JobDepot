@@ -95,8 +95,8 @@ public class Jobs extends android.support.v4.app.Fragment {
         Map<String, List<String>> childData=new HashMap<String, List<String>>();
         for(JobDetails jd:jobDetailses){
             List<String> _temp=new ArrayList<String>();
-            _temp.add(jd.getJobDesc());
-            _temp.add(jd.getJobLocation());
+            _temp.add("Description: "+jd.getJobDesc());
+            _temp.add("Location: "+jd.getJobLocation());
             childData.put(jd.getJobTitle(),_temp);
         }
         listView = (ExpandableListView) jobsView.findViewById(R.id.expandableListView);

@@ -68,20 +68,22 @@ public class EmployerLogin extends ActionBarActivity {
                             if (e == null) {
                                 Log.d("EmployerCredentials", "Retrieved  " + list.size() + " EmployeCredentials");
                                 if(list.size() > 0) {
-                                    ParseObject item = list.get(0);
-                                    Log.d("item", item.toString());
-                                    String Pass = (String) item.get("EmployerPassword");
-                                    Log.d("Pass", Pass);
-                                    if(Pass == textBoxPassword.getText().toString()) {
-                                        Log.d("Password Authenticated", "Access Allowed");
-                                        Intent intent = new Intent(getApplicationContext(), EmployerLogin.class);
-                                        startActivity(intent);
-                                    }
-                                    else {
-                                        Toast.makeText(getApplicationContext(),
-                                                "UserName or Password Incorrect",
-                                                Toast.LENGTH_LONG).show();
-                                    }
+                                    Intent intent = new Intent(getApplicationContext(), EmployerHome.class);
+                                    startActivity(intent);
+//                                    ParseObject item = list.get(0);
+//                                    Log.d("item", item.toString());
+//                                    String Pass = (String) item.get("EmployerPassword");
+//                                    Log.d("Pass", Pass);
+//                                    if(Pass == textBoxPassword.getText().toString()) {
+//                                        Log.d("Password Authenticated", "Access Allowed");
+//                                        Intent intent = new Intent(getApplicationContext(), EmployerLogin.class);
+//                                        startActivity(intent);
+//                                    }
+//                                    else {
+//                                        Toast.makeText(getApplicationContext(),
+//                                                "UserName or Password Incorrect",
+//                                                Toast.LENGTH_LONG).show();
+//                                    }
                                 }
                             } else {
                                 Log.d("EmployerCredentials", "Error: " + e.getMessage());

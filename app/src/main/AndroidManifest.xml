@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DisplayMessage"
+            android:name=".candidate.view.DisplayMessage"
             android:label="@string/title_activity_display_message"
             android:parentActivityName=".JobDepot" >
             <meta-data
@@ -75,11 +75,11 @@
         </receiver>
 
         <activity
-            android:name=".candidateHome"
+            android:name=".candidate.view.candidateHome"
             android:label="@string/title_activity_candidate_home" >
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".candidate.view.MainActivity"
             android:label="@string/title_activity_job_depot" >
         </activity>
         <activity

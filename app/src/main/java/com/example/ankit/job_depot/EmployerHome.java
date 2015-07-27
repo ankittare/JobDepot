@@ -1,5 +1,6 @@
 package com.example.ankit.job_depot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,20 +15,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Locale;
+import com.parse.Parse;
 
+import java.util.Locale;
+import static com.example.ankit.job_depot.EmployerLogin.EMPLOYER_NAME;
 
 public class EmployerHome extends ActionBarActivity implements ActionBar.TabListener {
 
     SectionsPagerAdapter mSectionsPagerAdapter;
 
-
+    String employerName = "";
     ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_candidate_home);
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            employerName = intent.getStringExtra(EMPLOYER_NAME);
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -110,7 +120,7 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
-                    return new PostJob();
+                    return new PostJob(getApplicationContext(), employerName);
                 case 1:{
                     return new PostedJobHistory();
                 }

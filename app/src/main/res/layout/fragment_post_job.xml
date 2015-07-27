@@ -85,14 +85,18 @@
         android:layout_below="@+id/switchJobType"
         android:layout_alignLeft="@+id/switchJobType"
         android:layout_marginTop="10dp" />
-
-    <DatePicker
-        android:layout_width="fill_parent"
+    <Button
+        android:id="@+id/btnAddDate"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/datePicker"
-        android:layout_below="@+id/textViewStartDate"
-        android:layout_alignLeft="@+id/textViewStartDate"
-        android:layout_alignRight="@+id/textViewPostJob"/>
+        android:text="Add Date" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Date"
+        android:id="@+id/textViewDisplayDate" />
 
     <TextView
         android:layout_width="wrap_content"

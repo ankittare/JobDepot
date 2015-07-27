@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot;
+package com.example.ankit.job_depot.candidate.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,7 +16,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.example.ankit.job_depot.DAO.JobsQuery;
+import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
+import com.example.ankit.job_depot.R;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.candidate.model.DAO;
+package com.example.ankit.job_depot.DAO;
 
 import android.util.Log;
 

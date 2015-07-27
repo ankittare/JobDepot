@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.candidate.view;
+package com.example.ankit.job_depot;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.candidate.view.candidateHome;
 import com.linkedin.platform.LISession;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIAuthError;

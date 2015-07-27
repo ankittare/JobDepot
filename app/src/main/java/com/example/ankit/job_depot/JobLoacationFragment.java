@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.candidate.view;
+package com.example.ankit.job_depot;
 
 import android.content.Context;
 import android.location.Address;
@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ankit.job_depot.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

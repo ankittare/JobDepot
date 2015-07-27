@@ -1,8 +1,10 @@
-package com.example.ankit.job_depot.candidate.view;
+package com.example.ankit.job_depot;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 

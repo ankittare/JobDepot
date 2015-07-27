@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name: "
+        android:id="@+id/textView14"
+        android:layout_below="@+id/imageView"
+        android:layout_alignRight="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password: "
+        android:id="@+id/textView15"
+        android:layout_gravity="center"
+        android:layout_alignTop="@+id/editText4"
+        android:layout_toLeftOf="@+id/editText4" />
+
+    <ImageView
+        android:layout_width="137dp"
+        android:layout_height="137dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3"
+        android:layout_gravity="center"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentRight="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:layout_gravity="center"
+        android:layout_alignLeft="@+id/editText3"
+        android:layout_centerVertical="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Changes"
+        android:id="@+id/button"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/editText4"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

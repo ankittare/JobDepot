@@ -30,7 +30,7 @@ public class SavedJobs extends Fragment {
     private final String TAG=getClass().getSimpleName();
     private JobsQuery jobsQuery;
     private ExpandableListView expandableListView;
-    private List<Map<String, String>> savedjobsData;
+    private List<Map<String, String>> savedjobsData=null;
     private List<String> groupData;
 
     @Override
@@ -42,7 +42,9 @@ public class SavedJobs extends Fragment {
         put actual ID here
          */
         jobsQuery=new JobsQuery();
-        savedjobsData=jobsQuery.getSavedJobs("ankitT");
+        if(savedjobsData==null)
+            savedjobsData=jobsQuery.getSavedJobs("ankitT");
+
 
         Map<String, List<String>> childData=new HashMap<String, List<String>>();
         for(Map<String, String> entry : savedjobsData){
@@ -66,6 +68,7 @@ public class SavedJobs extends Fragment {
 
         expandableListView.setIndicatorBounds(width - getDipsFromPixel(35), width
                 - getDipsFromPixel(5));
+
         return savedjobView;
     }
 
@@ -96,10 +99,10 @@ public class SavedJobs extends Fragment {
             LayoutInflater inflater = context.getLayoutInflater();
 
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.childlayout, null);
+                convertView = inflater.inflate(R.layout.childlayout_savedjobs, null);
             }
 
-            TextView item = (TextView) convertView.findViewById(R.id.text2);
+            TextView item = (TextView) convertView.findViewById(R.id.text4);
 
             item.setOnClickListener(new View.OnClickListener() {
 
@@ -108,6 +111,12 @@ public class SavedJobs extends Fragment {
                     /*
                     Bring up a new map
                      */
+
+                    JobLoacationFragment newFragment =  new JobLoacationFragment();;
+                    android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_Container, newFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
 
@@ -137,9 +146,9 @@ public class SavedJobs extends Fragment {
 
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.grouplayout,null);
+                convertView = infalInflater.inflate(R.layout.grouplayout_savedjobs,null);
             }
-            TextView item = (TextView) convertView.findViewById(R.id.text1);
+            TextView item = (TextView) convertView.findViewById(R.id.text3);
             item.setTypeface(null, Typeface.BOLD);
             item.setText(laptopName);
             return convertView;
@@ -162,5 +171,4 @@ public class SavedJobs extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
 }

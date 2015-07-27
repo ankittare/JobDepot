@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Ankit/Documents/Programming/ECoordinator/linkedin-sdk/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/anjali/Documents/JobDepot/linkedin-sdk/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="update_linkedin_app_cancel">Cancel</string>
     <string name="update_linkedin_app_download">Download</string>

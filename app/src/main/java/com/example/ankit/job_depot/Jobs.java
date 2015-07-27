@@ -16,9 +16,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
+import com.example.ankit.job_depot.DAO.JobsQuery;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,9 +56,7 @@ class JobDetails {
 
 public class Jobs extends android.support.v4.app.Fragment {
     private static final String TAG = "JOBS FRAGMENT";
-    private final List<String> jobsList = new ArrayList<String>();
-    private final ArrayList<JobDetails> jobDetailses = new ArrayList<JobDetails>();
-    private boolean lock = false;
+    private ArrayList<JobDetails> jobDetailses;
     ExpandableListView listView;
 
     @Override
@@ -67,26 +64,16 @@ public class Jobs extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View jobsView = inflater.inflate(R.layout.fragment_jobs, container, false);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
-        // synchronized (this){
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, com.parse.ParseException e) {
-                if (e == null) {
-                    for (ParseObject o : list) {
-                        JobDetails _jd = new JobDetails( o.getObjectId(),o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"));
-                        jobDetailses.add(_jd);
-                        jobsList.add(o.getString("jobName") + "\n " + o.getString("jobDesc") + "\n" + o.getString("jobLocation"));
-                        Log.i("Background", o.getString("jobName"));
-                        Log.d("ID", o.getObjectId());
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-                lock = true;
-                Log.i("Background", "" + jobsList.size());
+
+        if(jobDetailses==null){
+            jobDetailses=new ArrayList<JobDetails>();
+            JobsQuery jobsQuery=new JobsQuery();
+            for(ParseObject o:jobsQuery.getJobs()){
+                JobDetails _jd = new JobDetails( o.getObjectId(),o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"));
+                jobDetailses.add(_jd);
             }
-        });
+        }
+
         ArrayList<String> groupString=new ArrayList<String>();
         for(JobDetails jd:jobDetailses){
             groupString.add(jd.getJobTitle());
@@ -95,8 +82,8 @@ public class Jobs extends android.support.v4.app.Fragment {
         Map<String, List<String>> childData=new HashMap<String, List<String>>();
         for(JobDetails jd:jobDetailses){
             List<String> _temp=new ArrayList<String>();
-            _temp.add(jd.getJobDesc());
-            _temp.add(jd.getJobLocation());
+            _temp.add("Description: "+jd.getJobDesc());
+            _temp.add("Location: "+jd.getJobLocation());
             childData.put(jd.getJobTitle(),_temp);
         }
         listView = (ExpandableListView) jobsView.findViewById(R.id.expandableListView);

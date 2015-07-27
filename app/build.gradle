@@ -28,6 +28,7 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile project(':linkedin-sdk')
+    compile 'com.google.android.gms:play-services:7.5.0'
 
 }
 

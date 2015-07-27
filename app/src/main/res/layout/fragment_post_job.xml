@@ -1,9 +1,171 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="false"
+    android:layout_width="fill_parent"
+    tools:context="com.example.ankit.job_depot.PostJob"
+    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.example.ankit.job_depot.PostJob">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Post Job"
+        android:id="@+id/textViewPostJob"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/abc_action_bar_stacked_max_height" />
 
-</FrameLayout>
+   <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Job Title"
+            android:id="@+id/textViewJobTitle"
+       android:layout_marginTop="10dp" />
+    <EditText
+        android:layout_width="373dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextJobTitle"
+        android:editable="true"
+        android:hint="Please input job title"
+        android:layout_below="@+id/textViewPostJob"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Company"
+        android:id="@+id/textViewCompany"
+        android:layout_below="@+id/editTextJobTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/editTextCompanyName"
+        android:layout_below="@+id/textViewCompany"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:hint="Please input company name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Job Type"
+        android:id="@+id/textViewJobType"
+        android:layout_below="@+id/editTextCompanyName"
+        android:layout_alignRight="@+id/textViewCompany"
+        android:layout_marginTop="10dp" />
+
+    <Switch
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:text="Full Time Job"
+        android:id="@+id/switchJobType"
+        android:layout_below="@+id/textViewJobType"
+        android:layout_alignLeft="@+id/textViewJobType"
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Start Date"
+        android:id="@+id/textViewStartDate"
+        android:layout_below="@+id/switchJobType"
+        android:layout_alignLeft="@+id/switchJobType"
+        android:layout_marginTop="10dp" />
+
+    <DatePicker
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePicker"
+        android:layout_below="@+id/textViewStartDate"
+        android:layout_alignLeft="@+id/textViewStartDate"
+        android:layout_alignRight="@+id/textViewPostJob"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Number of Positions"
+        android:id="@+id/textViewNumPosition"
+        android:layout_alignTop="@+id/datePicker"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editTextNumPositions"
+        android:layout_below="@+id/textViewNumPosition"
+        android:layout_alignLeft="@+id/datePicker"
+        android:hint="Please enter number of openings"
+        android:layout_alignRight="@+id/editTextJobDesc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Job Description"
+        android:id="@+id/textViewJobDescription"
+        android:layout_below="@+id/editTextNumPositions"
+        android:layout_alignLeft="@+id/datePicker"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="166dp"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/editTextJobDesc"
+        android:layout_below="@+id/textViewJobDescription"
+        android:layout_alignLeft="@+id/datePicker"
+        android:layout_alignRight="@+id/switchJobType"
+        android:layout_alignParentBottom="true"
+        android:hint="Please input job description"
+        android:editable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Job Location"
+        android:id="@+id/textViewJobLocation"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/datePicker"
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/editTextJobLocation"
+        android:layout_below="@+id/scrollView"
+        android:layout_alignParentLeft="true"
+        android:hint="Please input job location" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post Job"
+        android:id="@+id/buttonPostJob"
+        android:layout_below="@+id/scrollView"
+        android:layout_alignLeft="@+id/datePicker"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
+</ScrollView>

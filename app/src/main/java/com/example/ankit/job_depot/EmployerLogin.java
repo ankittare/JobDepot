@@ -26,11 +26,11 @@ public class EmployerLogin extends ActionBarActivity {
     Button btnLogin;
     EditText textBoxUserName, textBoxPassword;
     TextView signUpLink;
+    public static String EMPLOYER_NAME;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Parse.enableLocalDatastore(this);
+        //Parse.enableLocalDatastore(getApplicationContext());
         Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
 
         setContentView(R.layout.activity_employer_login);
@@ -41,11 +41,10 @@ public class EmployerLogin extends ActionBarActivity {
         signUpLink = (TextView) findViewById(R.id.signUpLink);
 
         signUpLink.setOnClickListener(new View.OnClickListener() {
-                                          public void onClick(View v) {
-
-                                              Intent intent = new Intent(getApplicationContext(), EmployerSignUp.class);
-                                              startActivity(intent);
-                                          }
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EmployerSignUp.class);
+                startActivity(intent);
+            }
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -64,15 +63,16 @@ public class EmployerLogin extends ActionBarActivity {
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {
                             if (e == null) {
-                                Log.d("EmployerCredentials", "Retrieved  " + list.size() + " EmployeCredentials");
+                                Log.d("EmployerCredentials", "Retrieved  " + list.size() + " EmployerCredentials");
                                 if(list.size() > 0) {
                                     ParseObject item = list.get(0);
                                     Log.d("item", item.toString());
                                     String Pass = (String) item.get("EmployerPassword");
                                     Log.d("Pass", Pass);
-                                    if(Pass == textBoxPassword.getText().toString()) {
+                                    if(Pass.equals(textBoxPassword.getText().toString())) {
                                         Log.d("Password Authenticated", "Access Allowed");
-                                        Intent intent = new Intent(getApplicationContext(), EmployerLogin.class);
+                                        Intent intent = new Intent(getApplicationContext(), EmployerHome.class);
+                                        intent.putExtra(EMPLOYER_NAME, textBoxUserName.getText().toString());
                                         startActivity(intent);
                                     }
                                     else {

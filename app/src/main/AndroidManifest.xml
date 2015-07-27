@@ -3,7 +3,6 @@
     package="com.example.ankit.job_depot" >
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -90,11 +89,10 @@
             android:name=".EmployerSignUp"
             android:label="@string/title_activity_employer_sign_up" >
         </activity>
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDO3lUIhH3qQcT9jvaWBcmGLcTxsq1_Vj0y" />
+        <activity
+            android:name=".EmployerHome"
+            android:label="@string/title_activity_candidate_home" >
+        </activity>
     </application>
-
 
 </manifest>

@@ -26,10 +26,6 @@ public class EmployerSignUp extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
-
-
         setContentView(R.layout.activity_employer_sign_up);
 
         btnSignUp = (Button) findViewById(R.id.buttonEmployerSignUp);

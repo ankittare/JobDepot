@@ -45,7 +45,7 @@ public class PostedJobHistory extends Fragment {
             jobDetails = jobsQuery.getJobHistory(employerName);
         }
 
-        listViewJobHistory.setAdapter(new TimelineList(context, jobDetails));
+        listViewJobHistory.setAdapter(new TimelineList(getActivity(), jobDetails));
 
         return jobsView;
     }
@@ -83,9 +83,9 @@ class TimelineList extends BaseAdapter {
         TextView title, detail;
         title = (TextView) row.findViewById(R.id.title);
         detail = (TextView) row.findViewById(R.id.detail);
-        title.setText(getItem(position).get("JobName").toString());
+        title.setText(getItem(position).get("jobName").toString());
         title.setMovementMethod(LinkMovementMethod.getInstance());
-        detail.setText(getItem(position).get("updatedAt").toString());
+        detail.setText(getItem(position).get("jobStartDate").toString());
         return (row);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot;
+package com.example.ankit.job_depot.employer.view;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ankit.job_depot.employer.controller.EmployerHome;
+import com.example.ankit.job_depot.R;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;

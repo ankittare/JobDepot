@@ -35,8 +35,12 @@ public class CandidateController {
         return skillsList;
     }
 
-    public Integer getWorkExp(){
-        return (Integer)candidate.get("workexp");
+    public  List<String>  getWorkExp(){
+        String workexpString=candidate.getString("workexp");
+        String []skillsArray=workexpString.split(",");
+        List<String> workexpList=new ArrayList<String>();
+        Collections.addAll(workexpList, skillsArray);
+        return workexpList;
     }
 
 }

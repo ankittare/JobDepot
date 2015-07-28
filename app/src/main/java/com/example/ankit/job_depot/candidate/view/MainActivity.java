@@ -2,61 +2,104 @@ package com.example.ankit.job_depot.candidate.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.candidate.view.candidateHome;
+import com.example.ankit.job_depot.candidate.model.DAO.AuthQuery;
+import com.example.ankit.job_depot.candidate.model.DAO.CandidateQuery;
 import com.linkedin.platform.LISession;
 import com.linkedin.platform.LISessionManager;
 import com.linkedin.platform.errors.LIAuthError;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends Activity {
-    public static final String WELCOME_MESSAGE="com.example.ankit.job_depot.Welcome";
-    private static final String TAG="Main Activity";
+    public static final String WELCOME_MESSAGE = "com.example.ankit.job_depot.Welcome";
+    private static final String TAG = "Main Activity";
+    private Button Parsesignin, linkedInsignin;
+    private TextView signup;
     private EditText username;
     private EditText password;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         /*
         Parse Initialisation
          */
 
-        super.onCreate(savedInstanceState);
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
 
         /*
-        Parse API callback for saving object
+        Initialize View
          */
-       // ParseUser.enableAutomaticUser();
-        //ParseObject testObject = new ParseObject("TestObject");
-      //  testObject.put("foo", "bar");
-      //  testObject.saveInBackground();
 
-        username=(EditText)findViewById(R.id.username);
-        password=(EditText)findViewById(R.id.password);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        Parsesignin = (Button) findViewById(R.id.signin);
+        linkedInsignin = (Button) findViewById(R.id.linkedinsignin);
+        signup = (TextView) findViewById(R.id.signup);
+        try {
+            init();
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+        }
 
-        setContentView(R.layout.activity_main);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        checkAuthentication();
+    }
+
+    private void init() throws NullPointerException {
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 
+        Parsesignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    signIn();
+                } catch (NullPointerException ne) {
+                    ne.printStackTrace();
+                }
+            }
+        });
+
+
+        linkedInsignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                Check This
+                 */
+                checkAuthentication();
+            }
+        });
+
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                Create methods for sign up and call here
+                 */
+            }
+        });
 
     }
 
@@ -64,9 +107,6 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-
-
         return true;
     }
 
@@ -96,8 +136,8 @@ public class MainActivity extends Activity {
     On subsequent calls the access token generated for this user will be used.
      */
 
-    public void linkedInAuth(View view){
-        final TextView textView=(TextView)findViewById(R.id.error_text);
+    public void linkedInAuth(View view) {
+        final TextView textView = (TextView) findViewById(R.id.error_text);
 
         final Activity thisActivity = this;
 
@@ -132,37 +172,46 @@ public class MainActivity extends Activity {
     }
 
 
-    public void signIn(View v){
+    public void signIn() throws NullPointerException {
         /*
-        Do authentication with PArse Here
+        For Testing purpose
+        logging in with out authentication
+
+        Intent intent = new Intent(getApplicationContext(), candidateHome.class);
+                        startActivity(intent);
          */
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
-        query.whereEqualTo("username", "ankit");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, com.parse.ParseException e) {
-                if (e == null) {
-                    Log.i("score", "Retrieved " + list.size() + " scores");
-                    String usernameID=(String)list.get(0).get("objectId");
-                    Intent intent=new Intent(getApplicationContext(), candidateHome.class);
-                    intent.putExtra("usernameID", usernameID);
-                    startActivity(intent);
-                } else {
-                    Log.i("score", "Error: " + e.getMessage());
-                }
-            }
 
-
-        });
-       // Intent intent=new Intent(this, candidateHome.class);
-       //startActivity(intent);
-
-
+        /*
+        Do authentication with Parse Here
+         */
+        if ((username.getText().toString().equals("") || password.getText().toString().equals(""))) {
+            Toast.makeText(getApplicationContext(),
+                    "UserName or Password Missing!",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            AuthQuery authQuery = new AuthQuery();
+            if (authQuery.verifyCredential(username.getText().toString(), password.getText().toString())) {
+                Log.i(TAG, "User verified");
+                /*
+                Get signed in user's object ID and put it in shared preferences
+                 */
+                CandidateQuery candidateQuery = new CandidateQuery();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("ObjectId", candidateQuery.getObjectId(username.getText().toString()));
+                editor.commit();
+                /*
+                Try to open in same activity
+                 */
+                Intent intent = new Intent(getApplicationContext(), candidateHome.class);
+                startActivity(intent);
+            } else
+                Toast.makeText(getApplicationContext(), "UserName or Password Incorrect", Toast.LENGTH_LONG).show();
+        }
     }
 
-    public boolean checkAuthentication(){
-        LISessionManager liSessionManager=LISessionManager.getInstance(getApplicationContext());
-        LISession liSession=liSessionManager.getSession();
+    public boolean checkAuthentication() {
+        LISessionManager liSessionManager = LISessionManager.getInstance(getApplicationContext());
+        LISession liSession = liSessionManager.getSession();
         return liSession.isValid();
     }
 

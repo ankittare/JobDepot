@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -58,7 +60,8 @@ class JobDetails {
 public class Jobs extends android.support.v4.app.Fragment {
     private static final String TAG = "JOBS FRAGMENT";
     private ArrayList<JobDetails> jobDetailses;
-    ExpandableListView listView;
+    private ExpandableListView listView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +100,8 @@ public class Jobs extends android.support.v4.app.Fragment {
 
         listView.setIndicatorBounds(width - getDipsFromPixel(35), width
                 - getDipsFromPixel(5));
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
         return jobsView;
     }
 
@@ -162,10 +167,7 @@ public class Jobs extends android.support.v4.app.Fragment {
                                     ParseObject candidateApplyObject = new ParseObject("candidateList");
                                     candidateApplyObject.put("jobID", jobDetailses.get(childPosition).getId());
                                     candidateApplyObject.put("status", "Applied");
-                                    /*
-                                    Get actual acndidate ID
-                                     */
-                                    candidateApplyObject.put("studentCandidateID", "ankitT");
+                                    candidateApplyObject.put("studentCandidateID", sharedPreferences.getString("ObjectId", ""));
                                     candidateApplyObject.saveInBackground();
                                 }
                             });

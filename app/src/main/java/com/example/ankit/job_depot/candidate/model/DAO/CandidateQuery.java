@@ -31,6 +31,19 @@ public class CandidateQuery {
         return result.get(0);
     }
 
-
-
+    /*
+    How to deal with users with same username?
+     */
+    public String getObjectId(String username){
+        ParseObject result=null;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        query.whereEqualTo("username",username);
+        try {
+            result=query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.i("CandidateQUery", result.getObjectId());
+        return result.getObjectId();
+    }
 }

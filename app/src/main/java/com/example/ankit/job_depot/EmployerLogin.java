@@ -58,7 +58,9 @@ public class EmployerLogin extends ActionBarActivity {
                 else {
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("EmployerCredentials");
                     query.whereEqualTo("EmployerName", textBoxUserName.getText().toString());
-
+                    /*
+                    Check for Password also
+                     */
                     query.findInBackground(new FindCallback<ParseObject>() {
                         @Override
                         public void done(List<ParseObject> list, ParseException e) {

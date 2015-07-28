@@ -24,7 +24,6 @@ public class CandidateController {
         List<String> educationList=new ArrayList<String>();
         Collections.addAll(educationList, education);
         return educationList;
-
     }
 
     public List<String> getSkills(){

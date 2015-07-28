@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -33,12 +35,15 @@ import java.util.Map;
 /**
  * Created by Ankit on 7/9/2015.
  */
+
+
 public class Resume extends Fragment {
     private String usernameID;
     private static final String TAG = "Resume Fragment";
     private static final String Education = "Education";
     private static final String Skills = "Skills";
     private static final String Work_Experience = "Work Experience";
+    private SharedPreferences sharedPreferences;
     /*
     LinkedIn specific
      */
@@ -56,8 +61,8 @@ public class Resume extends Fragment {
     /*
     Views
      */
-    // TableLayout education,workexp,skills;
-    ExpandableListView expandableListView;
+
+    private ExpandableListView expandableListView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,13 +105,6 @@ public class Resume extends Fragment {
         Getting user data from Parse
          */
 
-        try {
-            Bundle extras = getActivity().getIntent().getExtras();
-            usernameID = extras.getString("usernameID");
-        } catch (NullPointerException nne) {
-            nne.printStackTrace();
-        }
-
         initializeView(resumeView);
         return resumeView;
     }
@@ -114,11 +112,10 @@ public class Resume extends Fragment {
     private void initializeView(View v) {
         CandidateQuery candidateQuery = new CandidateQuery();
 
-        /*
-        get Actual Id from somewhere
-         */
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-        candidateDetails = candidateQuery.getCandidateDetails("vGx1f5ygQf");
+
+        candidateDetails = candidateQuery.getCandidateDetails(sharedPreferences.getString("ObjectId", ""));
         Log.i(TAG, candidateDetails.getString("username"));
         candidateController = new CandidateController(candidateDetails);
 
@@ -299,8 +296,6 @@ public class Resume extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
-
 }
 
 

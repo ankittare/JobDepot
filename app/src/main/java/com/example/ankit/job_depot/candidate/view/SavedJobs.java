@@ -2,8 +2,10 @@ package com.example.ankit.job_depot.candidate.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -33,19 +35,20 @@ public class SavedJobs extends Fragment {
     private ExpandableListView expandableListView;
     private List<Map<String, String>> savedjobsData=null;
     private List<String> groupData;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View savedjobView=inflater.inflate(R.layout.fragment_savedjobs, container, false);
         groupData=new ArrayList<String>();
-        /*
-        put actual ID here
-         */
-        jobsQuery=new JobsQuery();
-        if(savedjobsData==null)
-            savedjobsData=jobsQuery.getSavedJobs("ankitT");
 
+        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        jobsQuery=new JobsQuery();
+        if(savedjobsData==null){
+            Log.i(TAG, sharedPreferences.getString("ObjectId", ""));
+            savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("ObjectId", ""));
+        }
 
         Map<String, List<String>> childData=new HashMap<String, List<String>>();
         for(Map<String, String> entry : savedjobsData){

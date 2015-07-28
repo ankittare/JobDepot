@@ -122,7 +122,7 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
                 case 0:
                     return new PostJob(getApplicationContext(), employerName);
                 case 1:{
-                    return new PostedJobHistory();
+                    return new PostedJobHistory(getApplicationContext(), employerName);
                 }
                 case 2:{
                     return new SearchCandidates();

@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot;
+package com.example.ankit.job_depot.employer.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,10 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.parse.Parse;
+import com.example.ankit.job_depot.employer.view.EmployerSettings;
+import com.example.ankit.job_depot.employer.view.PostJob;
+import com.example.ankit.job_depot.employer.view.PostedJobHistory;
+import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.employer.view.SearchCandidates;
 
 import java.util.Locale;
-import static com.example.ankit.job_depot.EmployerLogin.EMPLOYER_NAME;
+import static com.example.ankit.job_depot.employer.view.EmployerLogin.EMPLOYER_NAME;
 
 public class EmployerHome extends ActionBarActivity implements ActionBar.TabListener {
 

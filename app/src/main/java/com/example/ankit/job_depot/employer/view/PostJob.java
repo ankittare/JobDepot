@@ -1,46 +1,27 @@
-package com.example.ankit.job_depot;
+package com.example.ankit.job_depot.employer.view;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.app.Dialog;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.ankit.job_depot.R;
+import com.parse.ParseObject;
 
 public class PostJob extends Fragment {
     Context context;

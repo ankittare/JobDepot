@@ -1,10 +1,8 @@
-package com.example.ankit.job_depot;
+package com.example.ankit.job_depot.employer.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -14,14 +12,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.ankit.job_depot.candidate.model.DAO.EmployerHistory;
-import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
+import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PostedJobHistory extends Fragment {
     String employerName;

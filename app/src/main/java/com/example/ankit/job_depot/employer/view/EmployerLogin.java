@@ -1,6 +1,8 @@
 package com.example.ankit.job_depot.employer.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +31,7 @@ public class EmployerLogin extends ActionBarActivity {
     EditText textBoxUserName, textBoxPassword;
     TextView signUpLink;
     public static String EMPLOYER_NAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,7 @@ public class EmployerLogin extends ActionBarActivity {
                                     Log.d("Pass", Pass);
                                     if(Pass.equals(textBoxPassword.getText().toString())) {
                                         Log.d("Password Authenticated", "Access Allowed");
+
                                         Intent intent = new Intent(getApplicationContext(), EmployerHome.class);
                                         intent.putExtra(EMPLOYER_NAME, textBoxUserName.getText().toString());
                                         startActivity(intent);

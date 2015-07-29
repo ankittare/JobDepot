@@ -37,5 +37,6 @@
     <string name="apply">Apply!</string>
     <string name="title_activity_post_job">PostJob</string>
 
-    <string name="hello_world">Hello world!</string>\
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_job_information">JobInformation</string>\
 </resources>

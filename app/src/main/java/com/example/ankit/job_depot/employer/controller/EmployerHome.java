@@ -1,6 +1,8 @@
 package com.example.ankit.job_depot.employer.controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,6 +43,10 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
         Intent intent = getIntent();
         if (null != intent) {
             employerName = intent.getStringExtra(EMPLOYER_NAME);
+            SharedPreferences sharedPreferences = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("employerName", employerName);
+            editor.commit();
         }
 
         // Set up the action bar.
@@ -124,9 +130,9 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position){
                 case 0:
-                    return new PostJob(getApplicationContext(), employerName);
+                    return new PostJob();
                 case 1:{
-                    return new PostedJobHistory(getApplicationContext(), employerName);
+                    return new PostedJobHistory();
                 }
                 case 2:{
                     return new SearchCandidates();

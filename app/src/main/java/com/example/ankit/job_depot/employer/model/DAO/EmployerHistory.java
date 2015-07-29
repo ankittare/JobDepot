@@ -15,11 +15,6 @@ import java.util.Map;
  * Created by anjali on 7/28/15.
  */
 public class EmployerHistory {
-    String employerName;
-    public EmployerHistory(){}
-    public EmployerHistory(String employerName) {
-        this.employerName = employerName;
-    }
     public synchronized Map<String, String> getJobDetails(String employerName){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
         final Map<String, String> result=new HashMap<String, String>();
@@ -44,18 +39,16 @@ public class EmployerHistory {
         notifyAll();
         return result;
     }
-    public List<ParseObject> getJobs(String employerName) {
-        List<ParseObject> result=new ArrayList<ParseObject>();
+    public ParseObject getJobInfo(String employerName, int position){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+        List<ParseObject> queryString=null;
+        query.whereEqualTo("employerName", employerName);
         try {
-            result=query.find();
+            queryString=query.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(ParseObject parseObject:result){
-            Log.i("getJobs",parseObject.getString("jobName") );
-        }
-        return result;
+        return queryString.get(position);
     }
 
     public List<ParseObject> getJobHistory(String employerName){
@@ -68,5 +61,54 @@ public class EmployerHistory {
             e.printStackTrace();
         }
         return queryString;
+    }
+
+    public List<Map<String,String>> getPostedJobs(String employerName){
+        final List<Map<String, String>> listSavedJobs=new ArrayList<Map<String, String>>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+        Log.d("Abhartha", query.toString());
+        query.whereEqualTo("employerName", employerName);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, com.parse.ParseException e) {
+                if (e == null) {
+                    for (ParseObject o : list) {
+                        Log.d("Abharthan", o.toString());
+                        Map<String, String> result = new HashMap<String, String>();
+                        result.put("jobID", o.get("expRequired").toString());
+                        Log.d("Abhartha", o.get("expRequired").toString());
+                        result.put("status", o.getString("jobType"));
+                        Log.d("Abhartha", o.getString("jobType"));
+                        result.put("timesaved", o.getString("jobStartDate"));
+                        Log.d("Abhartha", o.getString("jobStartDate"));
+                        result.put("jobTitle", o.getString("jobName"));
+                        Log.d("Abhartha", o.getString("jobName"));
+                        result.put("jobdesc", o.getString("jobDesc"));
+                        Log.d("Abhartha", o.getString("jobDesc"));
+                        result.put("jobLocation", o.getString("jobLocation"));
+                        Log.d("Abhartha", o.getString("jobLocation"));
+                        listSavedJobs.add(result);
+                        Log.d("Ankit123", listSavedJobs.toString());
+                    }
+
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+        Log.d("Abhartha", listSavedJobs.toString());
+        return listSavedJobs;
+    }
+
+    public List<ParseObject> getJobs(String employerName) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+        query.whereEqualTo("employerName", employerName);
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

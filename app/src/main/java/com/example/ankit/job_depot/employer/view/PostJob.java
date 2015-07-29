@@ -3,6 +3,7 @@ package com.example.ankit.job_depot.employer.view;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,14 +25,8 @@ import com.example.ankit.job_depot.R;
 import com.parse.ParseObject;
 
 public class PostJob extends Fragment {
-    Context context;
     String employerName;
     public PostJob() {}
-
-    public PostJob(Context context, String eName) {
-        this.context = context;
-        employerName = eName;
-    }
 
     Button btnPostJob, btnAddDate;
     EditText ETJobTitle, ETCompanyname, ETNumPos,ETJobDesc,ETJobLocation;
@@ -63,6 +58,8 @@ public class PostJob extends Fragment {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
+        employerName = sharedPreferences.getString("employerName", "ankitb");
         // set current date into textview
         DisplayDate.setText(new StringBuilder()
                 // Month is 0 based, just add 1
@@ -84,9 +81,9 @@ public class PostJob extends Fragment {
             @Override
             public void onClick(View v) {
                 //Log.d(textBoxPassword.getText().toString(), " "+textBoxConfirmPassword.getText().toString());
-                if ((ETJobTitle.getText().toString() == "") || ETJobLocation.getText().toString() == "" ||
+                if ((ETJobTitle.getText().toString() =="") || ETJobLocation.getText().toString() == "" ||
                         ETJobDesc.getText().toString() == "" || ETCompanyname.getText().toString() == "") {
-                    Toast.makeText(context,
+                    Toast.makeText(getActivity(),
                             "All fields must be filled",
                             Toast.LENGTH_LONG).show();
                 }
@@ -103,9 +100,9 @@ public class PostJob extends Fragment {
                     jobObject.put("jobOpenings", ETNumPos.getText().toString());
 
                     if(SJobType.isActivated()) {
-                        jobObject.put("jobType", "Full Time");
-                    }else {
                         jobObject.put("jobType", "Part Time");
+                    }else {
+                        jobObject.put("jobType", "Full Time");
                     }
                     jobObject.put("employerName", employerName);
                     Log.d("Abhartha", jobObject.getClassName());
@@ -122,7 +119,7 @@ public class PostJob extends Fragment {
                     Log.d("Abhartha", jobObject.get("jobType").toString());
                     Log.d("Abhartha", jobObject.get("employerName").toString());
 
-                    Toast.makeText(context, "Job posted successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Job posted successfully", Toast.LENGTH_LONG).show();
                 }
             }
         });

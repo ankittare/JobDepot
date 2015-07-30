@@ -46,20 +46,19 @@ public class EmployerSignUp extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Log.d(textBoxPassword.getText().toString(), " "+textBoxConfirmPassword.getText().toString());
-                if ((textBoxUserName.getText().toString() == "") || textBoxPassword.getText().toString() == "" ||
-                        textBoxEmail.getText().toString() == "" || textBoxConfirmPassword.getText().toString() == "") {
+                if ((textBoxUserName.getText().toString().equals("")) || textBoxPassword.getText().toString().equals("") ||
+                        textBoxEmail.getText().toString().equals("") || textBoxConfirmPassword.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(),
                             "All fields must be filled",
                             Toast.LENGTH_LONG).show();
                 }
 
 
-//                else if(textBoxPassword.getText().toString() != textBoxConfirmPassword.getText().toString()) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Password are not same",
-//                            Toast.LENGTH_LONG).show();
-//                    return;
-//                }
+                else if(!textBoxPassword.getText().toString().equals( textBoxConfirmPassword.getText().toString())) {
+                    Toast.makeText(getApplicationContext(),
+                            "Password are not same",
+                            Toast.LENGTH_LONG).show();
+                }
                 else {
                     ParseObject testObject = new ParseObject("EmployerCredentials");
                     testObject.put("EmployerName", textBoxUserName.getText().toString());

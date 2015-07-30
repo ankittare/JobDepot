@@ -111,4 +111,19 @@ public class EmployerHistory {
         }
         return result;
     }
+
+    public List<ParseObject> getCandidates(String keyword) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        query.whereContains("skills", keyword);
+        Log.d("Keyword", keyword);
+        Log.d("QUERY", query.toString());
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("Abhar",result.toString());
+        return result;
+    }
 }

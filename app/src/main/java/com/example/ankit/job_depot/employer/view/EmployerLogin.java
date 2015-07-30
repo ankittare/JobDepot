@@ -55,7 +55,7 @@ public class EmployerLogin extends ActionBarActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((textBoxUserName.getText().toString() == "") || textBoxPassword.getText().toString() == "") {
+                if((textBoxUserName.getText().toString().equals("")) || textBoxPassword.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(),
                             "UserName or Password Incorrect",
                             Toast.LENGTH_LONG).show();

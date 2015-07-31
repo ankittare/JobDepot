@@ -72,22 +72,34 @@ public class SearchCandidates extends Fragment {
                                 Toast.LENGTH_LONG).show();
                     }
                     else {
+                        EmployerHistory candidateList = new EmployerHistory();
+                        CandidateList newFragment = null;
                         if(!(SearchField.getText().toString().equals(""))) {
                             keyword = (SearchField.getText().toString());
+                            List<ParseObject> o = candidateList.getCandidates(keyword);
+                            newFragment =  new CandidateList(o);
+                            SearchField.setText("");
                         }
                         if(!(SearchLoc.getText().toString().equals(""))) {
                             keyword = (SearchLoc.getText().toString().toLowerCase());
+                            List<ParseObject> o = candidateList.getCandidatesByLocation(keyword);
+                            newFragment =  new CandidateList(o);
+                            SearchLoc.setText("");
                         }
                         if(!(SearchSkills.getText().toString().equals("") )){
                             keyword = (SearchSkills.getText().toString().toLowerCase());
+                            List<ParseObject> o = candidateList.getCandidatesByskills(keyword);
+                            newFragment =  new CandidateList(o);
+                            SearchSkills.setText("");
                         }
                         if(!(SearchExp.getText().toString().equals(""))){
                             keyword = (SearchExp.getText().toString().toLowerCase());
+                            List<ParseObject> o = candidateList.getCandidatesByExperience(keyword);
+                            newFragment =  new CandidateList(o);
+                            SearchExp.setText("");
                         }
-                        EmployerHistory candidateList = new EmployerHistory();
-                        List<ParseObject> o = candidateList.getCandidates(keyword);
 
-                        CandidateList newFragment =  new CandidateList(o);
+
                         android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.searchcandidatefragment, newFragment);
                         transaction.addToBackStack(null);

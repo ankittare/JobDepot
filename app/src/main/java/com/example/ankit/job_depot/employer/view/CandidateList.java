@@ -4,14 +4,18 @@ package com.example.ankit.job_depot.employer.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
 import com.parse.ParseObject;
@@ -44,6 +48,13 @@ public class CandidateList extends android.support.v4.app.Fragment {
 
         LinearLayout mainLayout=(LinearLayout)getActivity().findViewById(R.id.searchcandidatefragmenttohide);
         mainLayout.setVisibility(LinearLayout.GONE);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Toast.makeText(getActivity().getApplicationContext(), "Yea!!! click ho gae called " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
         return  jobsView;
     }
 

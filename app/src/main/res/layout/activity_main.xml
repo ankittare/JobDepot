@@ -40,14 +40,13 @@
         android:gravity="center"
         />
 
-    <TextView
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="25dp"
-        android:id="@+id/error_text"
-        android:textColor="@color/red"
-        />
+        android:text="Keep me signed In"
+        android:id="@+id/checkBox"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,6 +56,15 @@
         android:layout_gravity="center_horizontal"
         android:paddingTop="25dp"
         android:textColor="@color/accent_material_light"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingTop="25dp"
+        android:id="@+id/error_text"
+        android:textColor="@color/red"
         />
 
 

@@ -33,10 +33,11 @@
     <string name="skills">Skills</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>\
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="apply">Apply!</string>
     <string name="title_activity_post_job">PostJob</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_job_information">JobInformation</string>\
+    <string name="title_activity_job_information">JobInformation</string>
+    <string name="google_map_key">AIzaSyDO3lUIhH3qQcT9jvaWBcmGLcTxsq1_Vj0</string>
 </resources>

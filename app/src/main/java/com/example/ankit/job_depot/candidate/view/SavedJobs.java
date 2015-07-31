@@ -112,15 +112,7 @@ public class SavedJobs extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    /*
-                    Bring up a new map
-                     */
 
-                    JobLoacationFragment newFragment =  new JobLoacationFragment();;
-                    android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_Container, newFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
                 }
             });
 

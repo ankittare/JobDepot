@@ -12,6 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -28,13 +29,17 @@ public class CareerBuilderAPICalls extends AsyncTask<String, String, String> {
     private final String TAG = getClass().getSimpleName();
     private HttpURLConnection connection;
     private SEXHandler sexHandler = new SEXHandler();
+    private List<CBJobs> nearbyJobs;
+
+    public List<CBJobs> getNearbyJobs() {
+        return nearbyJobs;
+    }
 
     private void jobSearch(String query) throws ProtocolException, MalformedURLException, IOException, ParserConfigurationException, SAXException {
-
         URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&Location=" + query);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        Log.i(TAG, connection.getResponseMessage());
+        //Log.i(TAG, connection.getResponseMessage());
         if (connection.getResponseCode() == RESPONSE_OK) {
             Log.i(TAG, connection.getResponseMessage());
             SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
@@ -45,9 +50,11 @@ public class CareerBuilderAPICalls extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPostExecute (String result){
-        Log.i(TAG, "Post Execte") ;
-        for (CBJobs cbJobs : sexHandler.getCBjobs()) {
+    protected void onPostExecute(String result) {
+        Log.i(TAG, "Post Execte");
+        //nearbyJobs=new ArrayList<CBJobs>();
+        nearbyJobs = sexHandler.getCBjobs();
+        for (CBJobs cbJobs : nearbyJobs) {
             Log.i(TAG, cbJobs.toString());
         }
     }
@@ -55,15 +62,17 @@ public class CareerBuilderAPICalls extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
-            try {
-                jobSearch(params[0]);
-            } catch (ParserConfigurationException e) {
-                e.printStackTrace();
-            } catch (SAXException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
+            jobSearch(params[0]);
+        } catch (ParserConfigurationException e) {
             e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e1) {
+            e1.printStackTrace();
+        } catch (MalformedURLException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         return null;
     }

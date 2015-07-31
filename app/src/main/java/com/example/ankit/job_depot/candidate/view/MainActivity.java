@@ -56,6 +56,9 @@ public class MainActivity extends Activity {
         Parsesignin = (Button) findViewById(R.id.signin);
         linkedInsignin = (Button) findViewById(R.id.linkedinsignin);
         signup = (TextView) findViewById(R.id.signup);
+        /*
+        implement Checkbox Logic
+         */
         try {
             init();
         } catch (NullPointerException ne) {

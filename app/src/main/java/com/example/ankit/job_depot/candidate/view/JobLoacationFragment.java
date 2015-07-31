@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.candidate.model.DAO.CBJobs;
+import com.example.ankit.job_depot.candidate.model.DAO.CareerBuilderAPICalls;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -29,25 +31,42 @@ import java.util.List;
  */
 
 public class JobLoacationFragment extends android.support.v4.app.Fragment {
-
+    private final String TAG = getClass().getSimpleName();
     private SupportMapFragment fragment;
     private GoogleMap map;
     private Context context;
     private LocationManager locationManager;
-    LocationListener locationListener;
+    private LocationListener locationListener;
+    private List<CBJobs> nearbyJobs;
 
-
-    public JobLoacationFragment(){    }
+    public JobLoacationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        nearbyJobs = new ArrayList<CBJobs>();
+
+        CareerBuilderAPICalls careerBuilderAPICalls = new CareerBuilderAPICalls();
+        careerBuilderAPICalls.execute("Pittsburgh");
+        nearbyJobs = careerBuilderAPICalls.getNearbyJobs();
+        try{
+            for (CBJobs cbJobs : nearbyJobs) {
+                Log.i(TAG, cbJobs.toString());
+            }
+        }
+        catch(NullPointerException ne){
+            ne.printStackTrace();;
+        }
+        /*
+        Implement Sync Adapter
+         */
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        context=getActivity().getApplicationContext();
+        context = getActivity().getApplicationContext();
         FragmentManager fm = getChildFragmentManager();
         fragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
         if (fragment == null) {
@@ -64,7 +83,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
             map = fragment.getMap();
 
-            locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
             locationListener = new LocationListener() {
                 public void onLocationChanged(Location location) {
@@ -100,6 +119,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
                 public void onProviderEnabled(String provider) {
                 }
+
                 @Override
                 public void onProviderDisabled(String provider) {
                     Log.i("Error", provider + " Not available");
@@ -112,7 +132,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
     public void onPause() {
         super.onPause();
-        locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
     }
 }

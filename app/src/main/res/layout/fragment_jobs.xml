@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.example.ankit.job_depot.candidate.view.Jobs"
     android:background="#ffffff"
+    android:id="@+id/fragment_Container"
     >
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,29 +15,21 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="135dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/searchView"
-        android:layout_alignParentLeft="true"
-        android:hint="Roles, Location,Companes..." />
-
     <SearchView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchView"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:queryHint="Jobs by industry" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Advanced Search"
+        android:text="Near By Jobs"
         android:id="@+id/textView11"
         android:textColor="#ff312bff"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/searchView"
         android:layout_alignRight="@+id/searchView" />
 
     <TextView
@@ -45,10 +38,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Recommended Jobs"
         android:id="@+id/textView12"
-        android:layout_below="@+id/textView11"
-        android:layout_toLeftOf="@+id/textView11"
-        android:layout_marginTop="36dp"
         android:typeface="monospace"
-        android:textColor="@android:color/holo_red_dark" />
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_below="@+id/textView11"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

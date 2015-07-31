@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +17,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
 import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.candidate.model.DAO.JobDetails;
+import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -27,40 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class JobDetails {
-    private String ID;
-    private String jobTitle;
-    private String jobDesc;
-    private String jobLocation;
-
-    public JobDetails(@NonNull String id, @NonNull String jobTitle, @NonNull String jobDesc, @NonNull String jobLocation) {
-        this.ID=id;
-        this.jobTitle = jobTitle;
-        this.jobDesc = jobDesc;
-        this.jobLocation = jobLocation;
-    }
-
-    public String getId() {
-        return ID;
-    }
-
-    public String getJobTitle() {
-        return jobTitle;
-    }
-
-    public String getJobDesc() {
-        return jobDesc;
-    }
-
-    public String getJobLocation() {
-        return jobLocation;
-    }
-}
-
 public class Jobs extends android.support.v4.app.Fragment {
     private static final String TAG = "JOBS FRAGMENT";
     private ArrayList<JobDetails> jobDetailses;
     private ExpandableListView listView;
+    private TextView nearByJobs;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -101,6 +72,21 @@ public class Jobs extends android.support.v4.app.Fragment {
         listView.setIndicatorBounds(width - getDipsFromPixel(35), width
                 - getDipsFromPixel(5));
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        nearByJobs=(TextView)jobsView.findViewById(R.id.textView11);
+        nearByJobs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              /*
+               Bring up a new map
+               */
+                JobLoacationFragment newFragment =  new JobLoacationFragment();;
+                android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_Container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         return jobsView;
     }

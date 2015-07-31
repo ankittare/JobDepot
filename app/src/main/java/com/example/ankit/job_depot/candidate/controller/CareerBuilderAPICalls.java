@@ -29,6 +29,7 @@ public class CareerBuilderAPICalls{
     private final String API_KEY = "WDHN1MW6NJX0KB74CJPD";
     private final String jobSearchURL = "http://api.careerbuilder.com/v2/jobsearch";
     private final Integer RESPONSE_OK = 200;
+    private final Integer RADIUS = 50;
     private final String TAG = getClass().getSimpleName();
     private HttpURLConnection connection;
     private SEXHandler sexHandler = new SEXHandler();
@@ -40,6 +41,7 @@ public class CareerBuilderAPICalls{
 
     public void jobSearch(String query) throws ProtocolException, MalformedURLException, IOException, ParserConfigurationException, SAXException {
         CBjobs=new ArrayList<CBJobs>();
+        //URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&Location=" + query+"&Radius="+RADIUS);
         URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&Location=" + query);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -52,34 +54,8 @@ public class CareerBuilderAPICalls{
         }
     }
 
-   /* @Override
-    protected void onPostExecute(String result) {
-        Log.i(TAG, "Post Execte");
-        //nearbyJobs=new ArrayList<CBJobs>();
-        CBjobs = sexHandler.getCBjobs();
-        for (CBJobs cbJobs : CBjobs) {
-            Log.i(TAG, cbJobs.toString());
-        }
-    }
 
-    @Override
-    protected String doInBackground(String... params) {
-        try {
-            jobSearch(params[0]);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e1) {
-            e1.printStackTrace();
-        } catch (MalformedURLException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        return null;
-    }
-    */
+
     private class SEXHandler extends DefaultHandler {
         private final String TAG = getClass().getSimpleName();
         private List<String> skills;
@@ -107,21 +83,19 @@ public class CareerBuilderAPICalls{
             switch (qName) {
                 case CBJobs.COMPANY: {
                     cbJobs.setCompany(attributeValue);
-                    // Log.i(qName, cbJobs.getCompany());
                     break;
                 }
                 case CBJobs.LOCATION: {
                     cbJobs.setLocation(attributeValue);
-                    // Log.i(qName, attributeValue);
                     break;
                 }
                 case CBJobs.EMPLOYMENT_TYPE: {
                     cbJobs.setEmploymentType(attributeValue);
-                    //Log.i(qName, attributeValue);
                     break;
                 }
-                case CBJobs.DID:{
+                case CBJobs.CompanyDetailsURL:{
                     cbJobs.setJobURL(attributeValue);
+                    Log.i(TAG, attributeValue);
                     break;
                 }
                 case CBJobs.LATITUDE:{

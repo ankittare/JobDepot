@@ -13,7 +13,7 @@ public class CBJobs {
     public final static String JOB_TITLE="JobTitle";
     public final static String SKILLS="Skills";
     public final static String LOCATION="Location";
-    public final static String DID="DID";
+    public final static String CompanyDetailsURL="CompanyDetailsURL";
     public final static String EMPLOYMENT_TYPE="EmploymentType";
 
 

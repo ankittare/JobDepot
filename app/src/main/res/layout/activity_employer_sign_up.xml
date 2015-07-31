@@ -1,9 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="false"
+    android:layout_width="fill_parent"
+    tools:context="com.example.ankit.job_depot.employer.view.EmployerSignUp"
+    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.example.ankit.job_depot.employer.view.EmployerSignUp">
 
     <TextView
@@ -15,7 +22,8 @@
         android:textColor="#0000FF"
         android:textSize="@dimen/abc_action_bar_stacked_max_height"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="250dp"
@@ -24,7 +32,9 @@
         android:hint="@string/username"
         android:gravity="center"
         android:layout_above="@+id/textBoxEmail"
-        android:layout_alignLeft="@+id/signInLink" />
+        android:layout_alignLeft="@+id/signInLink"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal" />
 
 
 
@@ -35,7 +45,8 @@
         android:hint="Email"
         android:gravity="center"
         android:layout_above="@+id/textBoxPassword"
-        android:layout_alignLeft="@+id/textBoxEmployerName" />
+        android:layout_alignLeft="@+id/textBoxEmployerName"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -45,7 +56,8 @@
         android:gravity="center"
         android:id="@+id/textBoxPassword"
         android:layout_above="@+id/textBoxConfirmPassword"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -55,7 +67,8 @@
         android:gravity="center"
         android:id="@+id/textBoxConfirmPassword"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="wrap_content"
@@ -63,7 +76,8 @@
         android:text="SignUp"
         android:id="@+id/buttonEmployerSignUp"
         android:layout_above="@+id/signInLink"
-        android:layout_alignRight="@+id/textBoxPassword" />
+        android:layout_alignRight="@+id/textBoxPassword"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,4 +93,5 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

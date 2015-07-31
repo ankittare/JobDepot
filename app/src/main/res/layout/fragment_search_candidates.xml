@@ -1,8 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="false"
+    android:layout_width="fill_parent"
+    android:id="@+id/searchcandidatefragment"
     tools:context="com.example.ankit.job_depot.employer.view.SearchCandidates"
-    android:id="@+id/searchcandidatefragment">
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,16 +21,34 @@
         android:id="@+id/textViewSearchCandidates"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="35dp" />
-
-    <EditText
+        android:textSize="35dp"
+        android:layout_marginLeft="40dp"
+        android:textColor="#ff7685ff"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="0.45">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/editTextSearch"
+            android:hint="Skills, Job Location, Position"
+            android:layout_below="@+id/textViewSearchCandidates"
+            android:layout_alignParentLeft="true" />
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editTextSearch"
-        android:hint="Skills, Job Location, Position"
-        android:layout_below="@+id/textViewSearchCandidates"
-        android:layout_alignParentLeft="true"
-        android:layout_above="@+id/editTextSearchByLocation" />
+        android:id="@+id/imageButtonSearch"
+        android:src="@drawable/action_search"
+        android:scaleType="centerInside"
+        android:background="#ff989bff"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_gravity="right" />
+</LinearLayout>
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -32,20 +57,6 @@
         android:hint="Search by location"
         android:layout_above="@+id/editTextSearchSkills"
         android:layout_alignParentLeft="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButtonSearch"
-        android:src="@drawable/action_search"
-        android:scaleType="centerInside"
-        android:layout_below="@+id/textViewSearchCandidates"
-        android:layout_toRightOf="@+id/editTextSearch"
-        android:layout_alignBottom="@+id/editTextSearch"
-        android:layout_alignRight="@+id/textViewSearchCandidates"
-        android:background="#ff989bff"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,6 +82,8 @@
         android:background="#ff7a5fff"
         android:layout_marginTop="44dp"
         android:layout_below="@+id/editTextSearchExp"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal" />
 
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

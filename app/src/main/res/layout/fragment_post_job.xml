@@ -19,7 +19,9 @@
         android:layout_gravity="center_horizontal|top"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="@dimen/abc_action_bar_stacked_max_height" />
+        android:textSize="35dp"
+        android:textColor="#ff8990ff"
+        android:textStyle="bold" />
 
    <TextView
             android:layout_width="wrap_content"
@@ -27,7 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Job Title"
             android:id="@+id/textViewJobTitle"
-       android:layout_marginTop="10dp" />
+       android:layout_marginTop="20dp" />
     <EditText
         android:layout_width="373dp"
         android:layout_height="wrap_content"

@@ -1,10 +1,70 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.ankit.job_depot.employer.view.EmployerSettings">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="false"
+    android:layout_width="fill_parent"
+    tools:context="com.example.ankit.job_depot.employer.view.EmployerSettings"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Update Account"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp"
+        android:textColor="#ff648bff"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextUpdateUsername"
+        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_marginTop="82dp"
+        android:layout_alignRight="@+id/textView4"
+        android:hint="Update your username"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextUpdatePassowrd"
+        android:layout_below="@+id/editTextUpdateUsername"
+        android:layout_alignLeft="@+id/editTextUpdateUsername"
+        android:layout_alignRight="@+id/editTextUpdateUsername"
+        android:password="true"
+        android:hint="Update your password"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextUpdateEmail"
+        android:layout_below="@+id/editTextUpdatePassowrd"
+        android:layout_alignLeft="@+id/editTextUpdatePassowrd"
+        android:layout_alignRight="@+id/editTextUpdatePassowrd"
+        android:hint="Update your email"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:id="@+id/buttonUpdate"
+        android:layout_below="@+id/editTextUpdateEmail"
+        android:layout_centerHorizontal="true"
+        android:background="#ff6779ff"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
+    </ScrollView>

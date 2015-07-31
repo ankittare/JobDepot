@@ -7,15 +7,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saved Jobs"
+        android:text="Posted Job History"
         android:id="@+id/textViewJobHistory"
         android:layout_gravity="center_horizontal|top"
         android:textStyle="bold"
         android:typeface="sans"
-        android:textColor="#ffff280e"
+        android:textColor="#ff7b8fff"
         android:gravity="center|center_vertical|center_horizontal|clip_horizontal"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="35dp" />
 
     <ExpandableListView
         android:layout_width="wrap_content"

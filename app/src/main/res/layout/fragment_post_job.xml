@@ -29,7 +29,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Job Title"
             android:id="@+id/textViewJobTitle"
-       android:layout_marginTop="20dp" />
+       android:layout_marginTop="20dp"
+       android:textColor="#ff8990ff" />
     <EditText
         android:layout_width="373dp"
         android:layout_height="wrap_content"
@@ -48,7 +49,8 @@
         android:id="@+id/textViewCompany"
         android:layout_below="@+id/editTextJobTitle"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ff8990ff" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -59,25 +61,21 @@
         android:layout_alignParentRight="true"
         android:hint="Please input company name" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Job Type"
-        android:id="@+id/textViewJobType"
-        android:layout_below="@+id/editTextCompanyName"
-        android:layout_alignRight="@+id/textViewCompany"
-        android:layout_marginTop="10dp" />
-
     <Switch
-        android:layout_width="347dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:text="Full Time Job"
+        android:text="Job Type"
         android:id="@+id/switchJobType"
         android:layout_below="@+id/textViewJobType"
         android:layout_alignLeft="@+id/textViewJobType"
-        android:layout_alignParentRight="true" />
-
+        android:layout_alignParentRight="true"
+        android:textOn="Full Time"
+        android:textOff="Part Time"
+        android:textColor="#ff8a92ff" />
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,13 +84,16 @@
         android:id="@+id/textViewStartDate"
         android:layout_below="@+id/switchJobType"
         android:layout_alignLeft="@+id/switchJobType"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ff8990ff" />
     <Button
         android:id="@+id/btnAddDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Date" />
-
+        android:text="Change date"
+        android:background="#ff909fff"
+        android:layout_marginLeft="160dp" />
+</LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,7 +109,8 @@
         android:id="@+id/textViewNumPosition"
         android:layout_alignTop="@+id/datePicker"
         android:layout_alignParentLeft="true"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ff8990ff" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -129,7 +131,8 @@
         android:id="@+id/textViewJobDescription"
         android:layout_below="@+id/editTextNumPositions"
         android:layout_alignLeft="@+id/datePicker"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ff8990ff" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -152,7 +155,8 @@
         android:id="@+id/textViewJobLocation"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/datePicker"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:textColor="#ff8990ff" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -172,6 +176,7 @@
         android:layout_below="@+id/scrollView"
         android:layout_alignLeft="@+id/datePicker"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#ff8b95ff" />
 </LinearLayout>
 </ScrollView>

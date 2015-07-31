@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.ankit.job_depot.R;
@@ -40,6 +41,9 @@ public class CandidateList extends android.support.v4.app.Fragment {
         Log.d("Abhartha -cand", candidateList.toString());
         Log.d("Abhartahn", getActivity().toString());
         listView.setAdapter(new FillCandidateList(getActivity(), candidateList));
+
+        LinearLayout mainLayout=(LinearLayout)getActivity().findViewById(R.id.searchcandidatefragmenttohide);
+        mainLayout.setVisibility(LinearLayout.GONE);
         return  jobsView;
     }
 

@@ -63,10 +63,7 @@ public class PostJob extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
         employerName = sharedPreferences.getString("employerName", "ankitb");
         // set current date into textview
-        DisplayDate.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(month + 1).append("-").append(day).append("-")
-                .append(year).append(" "));
+        DisplayDate.setText(new StringBuilder().append(year).append("-").append(" ").append(month + 1).append("-").append(day));
 
         btnAddDate = (Button)jobsView.findViewById(R.id.btnAddDate);
         btnAddDate.setOnClickListener(new View.OnClickListener() {

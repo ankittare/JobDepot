@@ -23,6 +23,4 @@
         android:id="@+id/CandidateList"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
-
-
 </LinearLayout>

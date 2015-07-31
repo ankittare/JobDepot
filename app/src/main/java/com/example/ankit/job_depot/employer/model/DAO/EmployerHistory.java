@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,27 +113,62 @@ public class EmployerHistory {
         return result;
     }
 
-//    public List<ParseObject> getCandidates(String keyword) {
-//        List<ParseObject> result=new ArrayList<ParseObject>();
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
-//        query.whereContains("skills", keyword);
-//        Log.d("Keyword", keyword);
-//        Log.d("QUERY", query.toString());
-//        try {
-//            result=query.find();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        Log.d("Abhar",result.toString());
-//        return result;
-//    }
-    public List<ParseObject> getCandidates(String keyword) {
+    public List<ParseObject> getCandidatesByskills(String keyword) {
         List<ParseObject> result=new ArrayList<ParseObject>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
         String pattern = "^.*" + keyword + ".*$";
         query.whereMatches("skills", keyword, "i");
         try {
             result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<ParseObject> getCandidatesByLocation(String keyword) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        String pattern = "^.*" + keyword + ".*$";
+        query.whereMatches("preferredJobLocation", keyword, "i");
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<ParseObject> getCandidatesByExperience(String keyword) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        String pattern = "^.*" + keyword + ".*$";
+        query.whereMatches("workexp", keyword, "i");
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<ParseObject> getCandidates(String keyword) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        String pattern = "^.*" + keyword + ".*$";
+
+        ParseQuery<ParseObject> querySkills = ParseQuery.getQuery("candidateDetails");
+        querySkills.whereMatches("skills", keyword, "i");
+
+        ParseQuery<ParseObject> queryExperience = ParseQuery.getQuery("candidateDetails");
+        queryExperience.whereMatches("workexp", keyword.toLowerCase(), "i");
+
+        ParseQuery<ParseObject> queryEducation = ParseQuery.getQuery("candidateDetails");
+        queryEducation.whereMatches("education", keyword.toUpperCase(), "i");
+
+        ParseQuery<ParseObject> queryCombined = ParseQuery.or(Arrays.asList(querySkills, queryExperience, queryEducation));
+
+        try {
+            result=queryCombined.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }

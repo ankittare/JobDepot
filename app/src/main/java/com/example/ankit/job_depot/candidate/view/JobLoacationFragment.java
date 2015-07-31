@@ -6,6 +6,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -14,17 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.candidate.controller.CareerBuilderAPICalls;
 import com.example.ankit.job_depot.candidate.model.DAO.CBJobs;
-import com.example.ankit.job_depot.candidate.model.DAO.CareerBuilderAPICalls;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.xml.sax.SAXException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Created by Ankit on 6/28/2015.
@@ -38,6 +43,8 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private List<CBJobs> nearbyJobs;
+    private CareerBuilderAPICalls careerBuilderAPICalls;
+
 
     public JobLoacationFragment() {
     }
@@ -45,21 +52,8 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         nearbyJobs = new ArrayList<CBJobs>();
-
-        CareerBuilderAPICalls careerBuilderAPICalls = new CareerBuilderAPICalls();
-        careerBuilderAPICalls.execute("Pittsburgh");
-        nearbyJobs = careerBuilderAPICalls.getNearbyJobs();
-        try{
-            for (CBJobs cbJobs : nearbyJobs) {
-                Log.i(TAG, cbJobs.toString());
-            }
-        }
-        catch(NullPointerException ne){
-            ne.printStackTrace();;
-        }
-        /*
-        Implement Sync Adapter
-         */
+        careerBuilderAPICalls=new CareerBuilderAPICalls();
+       // new getNearByJobs().execute(loc+"");
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 
@@ -108,10 +102,20 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
                     map.setMyLocationEnabled(true);
                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 13));
-
                     map.addMarker(new MarkerOptions()
-                            .title(addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getAddressLine(1))
-                            .position(loc));
+                                    .title(addresses.get(0).getAddressLine(0) + " " + addresses.get(0).getAddressLine(1))
+                                    .position(loc)
+                            ///.icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow))
+                    );
+                    for (CBJobs cbJobs : nearbyJobs) {
+                        //Log.i(TAG, cbJobs.toString());
+                        LatLng _jobLoc = new LatLng(Double.parseDouble(cbJobs.getLocationLatitude()), Double.parseDouble(cbJobs.getLocationLongitude()));
+                        map.addMarker(new MarkerOptions()
+                                .title(cbJobs.getJobTitle())
+                                .anchor(0.0f, 1.0f)
+                                .position(_jobLoc));
+                    }
+
                 }
 
                 public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -134,5 +138,30 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         super.onPause();
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
+    }
+
+    private class getNearByJobs extends AsyncTask<String, String, String>{
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, "Post Execte");
+            //nearbyJobs=new ArrayList<CBJobs>();
+            nearbyJobs =careerBuilderAPICalls.getCBjobs();
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+               careerBuilderAPICalls.jobSearch(params[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+            } catch (SAXException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }

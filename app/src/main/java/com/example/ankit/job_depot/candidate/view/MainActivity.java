@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
             ne.printStackTrace();
         }
 
+
     }
 
     private void init() throws NullPointerException {

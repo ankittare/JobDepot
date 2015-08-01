@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.CandidateSearch;
 
 import android.app.Activity;
 import android.content.Context;

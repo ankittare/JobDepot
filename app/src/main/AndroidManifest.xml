@@ -86,11 +86,11 @@
             android:label="@string/title_activity_job_depot" >
         </activity>
         <activity
-            android:name=".employer.view.EmployerLogin"
+            android:name=".employer.view.LoginAuthentication.EmployerLogin"
             android:label="@string/title_activity_employer_login" >
         </activity>
         <activity
-            android:name=".employer.view.EmployerSignUp"
+            android:name=".employer.view.LoginAuthentication.EmployerSignUp"
             android:label="@string/title_activity_employer_sign_up" >
         </activity>
         <activity

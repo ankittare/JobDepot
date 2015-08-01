@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.PostJob;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;

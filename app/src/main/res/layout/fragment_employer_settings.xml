@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="false"
     android:layout_width="fill_parent"
-    tools:context="com.example.ankit.job_depot.employer.view.EmployerSettings"
+    tools:context="com.example.ankit.job_depot.employer.view.Settings.EmployerSettings"
     android:layout_height="wrap_content">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
@@ -34,7 +34,9 @@
         android:layout_marginTop="82dp"
         android:layout_alignRight="@+id/textView4"
         android:hint="Update your username"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="center|clip_vertical" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -45,7 +47,9 @@
         android:layout_alignRight="@+id/editTextUpdateUsername"
         android:password="true"
         android:hint="Update your password"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="center|center_vertical" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -55,7 +59,9 @@
         android:layout_alignLeft="@+id/editTextUpdatePassowrd"
         android:layout_alignRight="@+id/editTextUpdatePassowrd"
         android:hint="Update your email"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:gravity="center|center_vertical" />
 
     <Button
         android:layout_width="wrap_content"

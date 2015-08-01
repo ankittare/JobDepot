@@ -1,4 +1,4 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.LoginAuthentication;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.employer.view.LoginAuthentication.EmployerLogin;
 import com.parse.ParseObject;
 
 

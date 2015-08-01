@@ -1,6 +1,5 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.CandidateSearch;
 
-import android.app.DialogFragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,19 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.candidate.view.JobLoacationFragment;
 import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
 import com.parse.ParseObject;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class SearchCandidates extends Fragment {

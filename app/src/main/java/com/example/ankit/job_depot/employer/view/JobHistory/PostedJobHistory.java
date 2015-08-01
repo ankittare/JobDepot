@@ -1,29 +1,21 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.JobHistory;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
 import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
 import com.parse.ParseObject;
 

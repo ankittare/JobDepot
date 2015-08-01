@@ -17,14 +17,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ankit.job_depot.employer.view.EmployerSettings;
-import com.example.ankit.job_depot.employer.view.PostJob;
-import com.example.ankit.job_depot.employer.view.PostedJobHistory;
+import com.example.ankit.job_depot.employer.view.Settings.EmployerSettings;
+import com.example.ankit.job_depot.employer.view.PostJob.PostJob;
+import com.example.ankit.job_depot.employer.view.JobHistory.PostedJobHistory;
 import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.employer.view.SearchCandidates;
+import com.example.ankit.job_depot.employer.view.CandidateSearch.SearchCandidates;
 
 import java.util.Locale;
-import static com.example.ankit.job_depot.employer.view.EmployerLogin.EMPLOYER_NAME;
+import static com.example.ankit.job_depot.employer.view.LoginAuthentication.EmployerLogin.EMPLOYER_NAME;
 
 public class EmployerHome extends ActionBarActivity implements ActionBar.TabListener {
 

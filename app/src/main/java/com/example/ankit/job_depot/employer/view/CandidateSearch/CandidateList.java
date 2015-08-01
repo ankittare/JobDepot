@@ -1,23 +1,20 @@
-package com.example.ankit.job_depot.employer.view;
+package com.example.ankit.job_depot.employer.view.CandidateSearch;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
+import com.example.ankit.job_depot.employer.view.CandidateSearch.FillCandidateList;
 import com.parse.ParseObject;
 
 import java.util.List;

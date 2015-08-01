@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="false"
     android:layout_width="fill_parent"
-    tools:context="com.example.ankit.job_depot.employer.view.PostJob"
+    tools:context="com.example.ankit.job_depot.employer.view.PostJob.PostJob"
     android:layout_height="wrap_content">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"

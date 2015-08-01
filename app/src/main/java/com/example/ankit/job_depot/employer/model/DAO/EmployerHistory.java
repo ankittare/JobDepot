@@ -1,5 +1,6 @@
 package com.example.ankit.job_depot.employer.model.DAO;
 
+import android.text.LoginFilter;
 import android.util.Log;
 
 import com.parse.FindCallback;
@@ -40,16 +41,19 @@ public class EmployerHistory {
         notifyAll();
         return result;
     }
-    public ParseObject getJobInfo(String employerName, int position){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+    public ParseObject getCandidate(String candidateName){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
         List<ParseObject> queryString=null;
-        query.whereEqualTo("employerName", employerName);
+        query.whereEqualTo("username", candidateName);
+        Log.d("Abhartha",query.toString());
+
         try {
             queryString=query.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return queryString.get(position);
+        Log.d("Abhartha",queryString.toString());
+        return queryString.get(0);
     }
 
     public List<ParseObject> getJobHistory(String employerName){

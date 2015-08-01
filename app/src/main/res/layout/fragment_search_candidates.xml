@@ -10,87 +10,85 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/searchcandidatefragment">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/searchcandidatefragmenttohide"
-        android:weightSum="1">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/searchcandidatefragmenttohide"
+            android:weightSum="1">
 
-        <!-- TODO: Update blank fragment layout -->
+            <!-- TODO: Update blank fragment layout -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Search Candidates"
-            android:id="@+id/textViewSearchCandidates"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="35dp"
-            android:layout_marginLeft="40dp"
-            android:textColor="#ff7685ff"
-            android:textStyle="bold" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="64dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="0.45">
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/editTextSearch"
-                android:hint="Skills, Job Location, Position"
-                android:layout_below="@+id/textViewSearchCandidates"
-                android:layout_alignParentLeft="true" />
-            <ImageButton
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButtonSearch"
-                android:src="@drawable/action_search"
-                android:scaleType="centerInside"
-                android:background="#ff989bff"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentStart="false"
-                android:layout_gravity="right" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Search Candidates"
+                android:id="@+id/textViewSearchCandidates"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="35dp"
+                android:layout_marginLeft="40dp"
+                android:textColor="#ff7685ff"
+                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0.45">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/editTextSearch"
+                    android:hint="Skills, Job Location, Position"
+                    android:layout_below="@+id/textViewSearchCandidates"
+                    android:layout_alignParentLeft="true" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonSearch"
+                    android:src="@drawable/action_search"
+                    android:scaleType="centerInside"
+                    android:background="#ff989bff"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_gravity="right" />
+            </LinearLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextSearchByLocation"
+                android:hint="Search by location"
+                android:layout_above="@+id/editTextSearchSkills"
+                android:layout_alignParentLeft="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextSearchSkills"
+                android:hint="Search by Skills"
+                android:layout_above="@+id/editTextSearchExp"
+                android:layout_alignParentLeft="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editTextSearchExp"
+                android:hint="Search by experience"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:id="@+id/buttonSearch"
+                android:background="#ff7a5fff"
+                android:layout_marginTop="44dp"
+                android:layout_below="@+id/editTextSearchExp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
-
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextSearchByLocation"
-            android:hint="Search by location"
-            android:layout_above="@+id/editTextSearchSkills"
-            android:layout_alignParentLeft="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextSearchSkills"
-            android:hint="Search by Skills"
-            android:layout_above="@+id/editTextSearchExp"
-            android:layout_alignParentLeft="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editTextSearchExp"
-            android:hint="Search by experience"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            android:id="@+id/buttonSearch"
-            android:background="#ff7a5fff"
-            android:layout_marginTop="44dp"
-            android:layout_below="@+id/editTextSearchExp"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal" />
-
-    </LinearLayout>
     </LinearLayout>
 </ScrollView>

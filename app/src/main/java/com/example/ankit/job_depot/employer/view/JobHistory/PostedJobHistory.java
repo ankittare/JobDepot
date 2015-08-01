@@ -139,18 +139,6 @@ public class PostedJobHistory extends Fragment {
 
             TextView item = (TextView) convertView.findViewById(R.id.text4);
 
-//            item.setOnClickListener(new View.OnClickListener() {
-//
-//                @Override
-//                public void onClick(View v) {
-//                    JobLoacationFragment newFragment =  new JobLoacationFragment();
-//                    android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragment_container_history, newFragment);
-//                    transaction.addToBackStack(null);
-//                    transaction.commit();
-//                }
-//            });
-
             item.setText(laptop);
             return convertView;
         }

@@ -55,10 +55,9 @@ public class Resume extends Fragment {
     /*
     LinkedIn specific
      */
-    private static final String host = "api.linkedin.com";
+
     //private static final String topCardUrl = "https://api.linkedin.com/v1/people/~?format=json";
-    private static final String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,headline,positions,picture-url)?format=json";
-    private static final String shareUrl = "https://" + host + "/v1/people/~/shares";
+    private static final String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,lastName,headline,positions,picture-url)?format=json";
     /*
     Parse Specific
      */
@@ -66,6 +65,7 @@ public class Resume extends Fragment {
     private CandidateController candidateController;
     private List<String> groupData;
     private Map<String, List<String>> childData;
+    private String parseUsername;
 
     /*
     Views
@@ -73,73 +73,66 @@ public class Resume extends Fragment {
 
     private ExpandableListView expandableListView;
     private ImageView imageView;
-    TextView textView;
+    private TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View resumeView = inflater.inflate(R.layout.fragment_resume, container, false);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         /*
         Getting data from LinkedIn
          */
         textView = (TextView) resumeView.findViewById(R.id.textView);
         imageView = (ImageView) resumeView.findViewById(R.id.imageView2);
 
-        APIHelper apiHelper = null;
-        Context context = null;
-        try {
-            context = getActivity().getApplicationContext();
-        } catch (NullPointerException n) {
-            Log.e(TAG, "I knew it would give null pointer");
-        }
-        if (context != null) {
-            apiHelper = APIHelper.getInstance(context);
-            apiHelper.getRequest(context, topCardUrl, new ApiListener() {
-                @Override
-                public void onApiSuccess(ApiResponse apiResponse) {
-                    Log.i(TAG, "API sucess");
-                    JSONObject jsonObject = apiResponse.getResponseDataAsJson();
+        APIHelper apiHelper = APIHelper.getInstance(getActivity().getApplicationContext());
+        apiHelper.getRequest(getActivity().getApplicationContext(), topCardUrl, new ApiListener() {
+            @Override
+            public void onApiSuccess(ApiResponse apiResponse) {
+                JSONObject jsonObject = apiResponse.getResponseDataAsJson();
+                String pictureURL = null;
+                try {
+                    parseUsername = jsonObject.getString("firstName") + jsonObject.getString("lastName");
+                    parseUsername = parseUsername.toLowerCase();
+                    /*
+                    Putting username in shared preferences because for some reason i am getting null when trying to access instance variables outside anonymous inner class
+                    */
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", parseUsername);
 
-
-                    Log.i(TAG, jsonObject.toString());
-                    try {
-                        String pictureURL = jsonObject.getString("pictureUrl");
-                        pictureURL = pictureURL.replace("\\", "");
-                        DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
-                        downloadImageTask.execute(pictureURL);
-                        imageView = downloadImageTask.getBmImage();
-                        Log.i(TAG, pictureURL);
-                        textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i(TAG, parseUsername);
+                    CandidateQuery candidateQuery = new CandidateQuery();
+                    String id = candidateQuery.getObjectId(sharedPreferences.getString("username", ""));
+                    Log.i(TAG, id);
+                    candidateDetails = candidateQuery.getCandidateDetails(id);
+                    editor.putString("ObjectId", candidateDetails.getObjectId());
+                    editor.commit();
+                    pictureURL = jsonObject.getString("pictureUrl");
+                    pictureURL = pictureURL.replace("\\", "");
+                    DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
+                    downloadImageTask.execute(pictureURL);
+                    imageView = downloadImageTask.getBmImage();
+                    textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
+                    initializeView(resumeView, candidateDetails);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                Log.i(TAG, pictureURL);
+            }
 
-                @Override
-                public void onApiError(LIApiError LIApiError) {
-                    Log.i(TAG, LIApiError.toString());
-                }
-            });
-        }
-        /*
-        Getting user data from Parse
-         */
+            @Override
+            public void onApiError(LIApiError LIApiError) {
 
-        initializeView(resumeView);
+            }
+        });
+
         return resumeView;
     }
 
-    private void initializeView(View v) {
-        CandidateQuery candidateQuery = new CandidateQuery();
+    private void initializeView(View v, ParseObject candidateDetails) {
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-
-
-        candidateDetails = candidateQuery.getCandidateDetails(sharedPreferences.getString("ObjectId", ""));
-
-
-        Log.i(TAG, candidateDetails.getString("username"));
         candidateController = new CandidateController(candidateDetails);
 
         groupData = new ArrayList<String>();
@@ -164,6 +157,7 @@ public class Resume extends Fragment {
 
         expandableListView.setIndicatorBounds(width - getDipsFromPixel(35), width
                 - getDipsFromPixel(5));
+
     }
 
     private void fillEducationData() {
@@ -319,6 +313,7 @@ public class Resume extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
+
 
 }
 

@@ -1,5 +1,7 @@
 package com.example.ankit.job_depot.candidate.controller;
 
+import android.support.annotation.NonNull;
+
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ public class CandidateController {
 
     ParseObject candidate;
 
-    public CandidateController(ParseObject p){
+    public CandidateController(@NonNull ParseObject p){
         candidate=p;
     }
 

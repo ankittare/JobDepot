@@ -63,14 +63,10 @@ public class MainActivity extends Activity {
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-       try{
-           username.setText(sharedPreferences.getString("username", ""));
-           password.setText(sharedPreferences.getString("password", ""));
-       }
-       catch(NullPointerException ne){
-           Log.e(TAG, "Shared Preferences Not Set");
-       }
 
+        sharedPreferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if(sharedPreferences.contains("username"))
+            username.setText(sharedPreferences.getString("username", ""));
 
         Parsesignin = (Button) findViewById(R.id.signin);
         linkedInsignin = (ImageButton) findViewById(R.id.linkedInSignIn);
@@ -83,13 +79,10 @@ public class MainActivity extends Activity {
         } catch (NullPointerException ne) {
             ne.printStackTrace();
         }
-
-
     }
 
     private void init() throws NullPointerException {
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         Parsesignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +94,6 @@ public class MainActivity extends Activity {
             }
         });
 
-
         linkedInsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +101,6 @@ public class MainActivity extends Activity {
                 linkedInAuth();
             }
         });
-
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +110,6 @@ public class MainActivity extends Activity {
                  */
             }
         });
-
     }
 
     @Override
@@ -153,22 +143,21 @@ public class MainActivity extends Activity {
                 // Authentication was successful.  You can now do
                 // other calls with the SDK
                 Log.i("Init Sucess", String.valueOf(checkAuthentication()));
-
-
                 /*
                 Moving to candidate home Page
                  */
-                try{
-                    if(sharedPreferences.getString("ObjectId", "")==null||sharedPreferences.getString("ObjectId", "").equals("")){
-                        CandidateQuery candidateQuery = new CandidateQuery();
+                try {
+                    if (!sharedPreferences.contains("username")) {
+                        /*CandidateQuery candidateQuery = new CandidateQuery();
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        //editor.putString("ObjectId", candidateQuery.getObjectId(email));
-                        //editor.putString("username", username.getText().toString());
+                        editor.putString("ObjectId", parseUsername);
+                        editor.putString("username", username.getText().toString());
                         //editor.putString("password", username.getText().toString());
-                        editor.commit();
+                        editor.commit();*/
+
                     }
-                }
-                catch(Exception e){
+                } catch (Exception e) {
+
                     e.printStackTrace();
                 }
                 startActivity(new Intent(thisActivity, candidateHome.class));
@@ -181,20 +170,12 @@ public class MainActivity extends Activity {
                 Log.i("Init Failed", String.valueOf(checkAuthentication()));
                 Log.i("Error Message", error.toString());
                 textView.setText("Authentication Failed");
-
             }
         }, true);
     }
 
 
     public void signIn() throws NullPointerException {
-        /*
-        For Testing purpose
-        logging in with out authentication
-
-        Intent intent = new Intent(getApplicationContext(), candidateHome.class);
-                        startActivity(intent);
-         */
 
         /*
         Do authentication with Parse Here
@@ -212,7 +193,7 @@ public class MainActivity extends Activity {
                 check if its already there in shared preferences, if not then put it there
                  */
 
-                if(sharedPreferences.getString("ObjectId", "")==null||sharedPreferences.getString("ObjectId", "").equals("")){
+                if (sharedPreferences.getString("ObjectId", "") == null || sharedPreferences.getString("ObjectId", "").equals("")) {
                     CandidateQuery candidateQuery = new CandidateQuery();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("ObjectId", candidateQuery.getObjectId(username.getText().toString()));
@@ -244,6 +225,7 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
     }
+
     public String getEmailaddress() {
         String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,headline,positions,picture-url)?format=json";
         APIHelper apiHelper = null;
@@ -259,7 +241,7 @@ public class MainActivity extends Activity {
                     JSONObject jsonObject = apiResponse.getResponseDataAsJson();
                     Log.i(TAG, jsonObject.toString());
                     try {
-                        email=jsonObject.getString("email-address");
+                        email = jsonObject.getString("email-address");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

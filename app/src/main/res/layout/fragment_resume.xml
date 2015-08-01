@@ -3,29 +3,27 @@
     android:layout_height="wrap_content"
     android:background="#ffffff">
 
-    <ImageButton
-        android:id="@+id/imageButton"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:id="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:src="@drawable/linkedin" />
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:gravity="center|center_vertical|center_horizontal"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        android:textColorHint="@color/background_material_light"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentRight="true" />
 
     <ExpandableListView
         android:id="@+id/resumeDetails"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="70dp"></ExpandableListView>
+        android:layout_marginTop="90dp"></ExpandableListView>
 </RelativeLayout>

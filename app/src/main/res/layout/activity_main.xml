@@ -8,7 +8,7 @@
     >
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:id="@+id/username"
         android:hint="@string/username"
@@ -16,7 +16,7 @@
         />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="261dp"
         android:layout_height="wrap_content"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -24,7 +24,7 @@
         android:id="@+id/password" />
 
     <Button
-        android:layout_width="175dp"
+        android:layout_width="301dp"
         android:layout_height="wrap_content"
         android:id="@+id/signin"
         android:text="@string/signin"
@@ -32,13 +32,12 @@
         android:layout_gravity="center_horizontal"
         />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linkedinsignin"
-        android:text="@string/linkedInSignIn"
-        android:gravity="center"
-        />
+        android:id="@+id/linkedInSignIn"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/lsignin" />
 
     <CheckBox
         android:layout_width="wrap_content"

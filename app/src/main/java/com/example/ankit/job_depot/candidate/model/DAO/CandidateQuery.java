@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class CandidateQuery {
 
-    public ParseObject getCandidateDetails(String ID) {
+    public ParseObject getCandidateDetails(String ID) throws ArrayIndexOutOfBoundsException {
         List<ParseObject> result=new ArrayList<ParseObject>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
         /*
@@ -37,7 +37,10 @@ public class CandidateQuery {
     public String getObjectId(String username){
         ParseObject result=null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
-        query.whereEqualTo("username",username);
+        if(username.contains("@"))
+            query.whereEqualTo("email",username);
+        else
+            query.whereEqualTo("username",username);
         try {
             result=query.getFirst();
         } catch (ParseException e) {

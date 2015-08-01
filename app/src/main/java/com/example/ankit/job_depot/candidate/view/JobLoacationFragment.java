@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
-import com.example.ankit.job_depot.candidate.controller.CareerBuilderAPICalls;
+import com.example.ankit.job_depot.candidate.controller.CareerBuilderAPIHelper;
 import com.example.ankit.job_depot.candidate.model.DAO.CBJobs;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,7 +43,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     private Context context;
 
     private List<CBJobs> nearbyJobs;
-    private CareerBuilderAPICalls careerBuilderAPICalls;
+    private CareerBuilderAPIHelper careerBuilderAPIHelper;
     private List<Address> address;
 
     public JobLoacationFragment() {
@@ -52,7 +52,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         nearbyJobs = new ArrayList<CBJobs>();
-        careerBuilderAPICalls = new CareerBuilderAPICalls();
+        careerBuilderAPIHelper = new CareerBuilderAPIHelper();
 
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
@@ -139,14 +139,14 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(String result) {
             Log.i(TAG, "Post Execte");
             //nearbyJobs=new ArrayList<CBJobs>();
-            nearbyJobs = careerBuilderAPICalls.getCBjobs();
+            nearbyJobs = careerBuilderAPIHelper.getCBjobs();
             showNearByJobs();
         }
 
         @Override
         protected String doInBackground(String... params) {
             try {
-                careerBuilderAPICalls.jobSearch(params[0]);
+                careerBuilderAPIHelper.jobSearch(params[0]);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParserConfigurationException e) {

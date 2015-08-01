@@ -10,18 +10,26 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.model.DAO.AuthQuery;
 import com.example.ankit.job_depot.candidate.model.DAO.CandidateQuery;
+import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISession;
 import com.linkedin.platform.LISessionManager;
+import com.linkedin.platform.errors.LIApiError;
 import com.linkedin.platform.errors.LIAuthError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
 import com.parse.Parse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +38,13 @@ import java.util.List;
 public class MainActivity extends Activity {
     public static final String WELCOME_MESSAGE = "com.example.ankit.job_depot.Welcome";
     private static final String TAG = "Main Activity";
-    private Button Parsesignin, linkedInsignin;
+    private Button Parsesignin;
+    private ImageButton linkedInsignin;
     private TextView signup;
     private EditText username;
     private EditText password;
     private SharedPreferences sharedPreferences;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +63,17 @@ public class MainActivity extends Activity {
 
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+       try{
+           username.setText(sharedPreferences.getString("username", ""));
+           password.setText(sharedPreferences.getString("password", ""));
+       }
+       catch(NullPointerException ne){
+           Log.e(TAG, "Shared Preferences Not Set");
+       }
+
+
         Parsesignin = (Button) findViewById(R.id.signin);
-        linkedInsignin = (Button) findViewById(R.id.linkedinsignin);
+        linkedInsignin = (ImageButton) findViewById(R.id.linkedInSignIn);
         signup = (TextView) findViewById(R.id.signup);
         /*
         implement Checkbox Logic
@@ -71,8 +90,6 @@ public class MainActivity extends Activity {
     private void init() throws NullPointerException {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-
         Parsesignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,10 +105,8 @@ public class MainActivity extends Activity {
         linkedInsignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Check This
-                 */
                 checkAuthentication();
+                linkedInAuth();
             }
         });
 
@@ -114,33 +129,13 @@ public class MainActivity extends Activity {
         return true;
     }
 
-
-   /* public void sendMessage(View view){
-        Intent intent=new Intent(this, Candidate_main_Activity.class);
-        EditText username=(EditText)findViewById(R.id.username);
-        //Pass password=findViewById(R.id.p)
-        String message=null;
-
-        if(username.getText().toString().equals("ankit")){
-            message="Welcome, "+username.getText().toString()+"!";
-            intent.putExtra(WELCOME_MESSAGE, message);
-
-        }
-        else{
-            TextView textView=(TextView)findViewById(R.id.error_text);
-            message="@string/error_text";
-            textView.setText(message);
-        }
-        startActivity(intent);
-    }
-    */
     /*
     linkedInAuth: Authorises the app for using the basic profile of the candidate
     The first time this method is called, there is no acess token, so the init method will not have token
     On subsequent calls the access token generated for this user will be used.
      */
 
-    public void linkedInAuth(View view) {
+    public void linkedInAuth() {
         final TextView textView = (TextView) findViewById(R.id.error_text);
 
         final Activity thisActivity = this;
@@ -148,6 +143,7 @@ public class MainActivity extends Activity {
         // Build the list of member required permissions
         List<String> scope = new ArrayList<>();
         scope.add("r_basicprofile");
+        scope.add("r_emailaddress");
         scope.add("w_share");
 
 
@@ -157,9 +153,24 @@ public class MainActivity extends Activity {
                 // Authentication was successful.  You can now do
                 // other calls with the SDK
                 Log.i("Init Sucess", String.valueOf(checkAuthentication()));
+
+
                 /*
                 Moving to candidate home Page
                  */
+                try{
+                    if(sharedPreferences.getString("ObjectId", "")==null||sharedPreferences.getString("ObjectId", "").equals("")){
+                        CandidateQuery candidateQuery = new CandidateQuery();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //editor.putString("ObjectId", candidateQuery.getObjectId(email));
+                        //editor.putString("username", username.getText().toString());
+                        //editor.putString("password", username.getText().toString());
+                        editor.commit();
+                    }
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
                 startActivity(new Intent(thisActivity, candidateHome.class));
 
             }
@@ -198,11 +209,17 @@ public class MainActivity extends Activity {
                 Log.i(TAG, "User verified");
                 /*
                 Get signed in user's object ID and put it in shared preferences
+                check if its already there in shared preferences, if not then put it there
                  */
-                CandidateQuery candidateQuery = new CandidateQuery();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("ObjectId", candidateQuery.getObjectId(username.getText().toString()));
-                editor.commit();
+
+                if(sharedPreferences.getString("ObjectId", "")==null||sharedPreferences.getString("ObjectId", "").equals("")){
+                    CandidateQuery candidateQuery = new CandidateQuery();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("ObjectId", candidateQuery.getObjectId(username.getText().toString()));
+                    editor.putString("username", username.getText().toString());
+                    editor.putString("password", username.getText().toString());
+                    editor.commit();
+                }
                 /*
                 Try to open in same activity
                  */
@@ -220,12 +237,41 @@ public class MainActivity extends Activity {
     }
 
     private static Scope buildScope() {
-
         return Scope.build(Scope.R_BASICPROFILE, Scope.W_SHARE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
+    }
+    public String getEmailaddress() {
+        String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,headline,positions,picture-url)?format=json";
+        APIHelper apiHelper = null;
+        //Log.i(TAG, "Context="+get.toString());
+        if (getApplicationContext() != null) {
+            Log.i(TAG, "------------");
+            apiHelper = APIHelper.getInstance(getApplicationContext());
+            apiHelper.getRequest(getApplicationContext(), topCardUrl, new ApiListener() {
+                @Override
+                public void onApiSuccess(ApiResponse apiResponse) {
+                    Log.i(TAG, "API sucess");
+
+                    JSONObject jsonObject = apiResponse.getResponseDataAsJson();
+                    Log.i(TAG, jsonObject.toString());
+                    try {
+                        email=jsonObject.getString("email-address");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onApiError(LIApiError LIApiError) {
+                    Log.i(TAG, LIApiError.toString());
+                }
+            });
+        }
+        Log.i(TAG, email);
+        return email;
     }
 }

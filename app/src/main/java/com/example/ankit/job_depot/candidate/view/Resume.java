@@ -24,8 +24,16 @@ import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.controller.CandidateController;
+import com.example.ankit.job_depot.candidate.controller.DownloadImageTask;
 import com.example.ankit.job_depot.candidate.model.DAO.CandidateQuery;
+import com.linkedin.platform.APIHelper;
+import com.linkedin.platform.errors.LIApiError;
+import com.linkedin.platform.listeners.ApiListener;
+import com.linkedin.platform.listeners.ApiResponse;
 import com.parse.ParseObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +56,8 @@ public class Resume extends Fragment {
     LinkedIn specific
      */
     private static final String host = "api.linkedin.com";
-    private static final String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,first-name,skills,educations,languages,twitter-accounts)?format=json";
+    //private static final String topCardUrl = "https://api.linkedin.com/v1/people/~?format=json";
+    private static final String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,headline,positions,picture-url)?format=json";
     private static final String shareUrl = "https://" + host + "/v1/people/~/shares";
     /*
     Parse Specific
@@ -63,6 +72,8 @@ public class Resume extends Fragment {
      */
 
     private ExpandableListView expandableListView;
+    private ImageView imageView;
+    TextView textView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +83,9 @@ public class Resume extends Fragment {
         /*
         Getting data from LinkedIn
          */
-        /*final TextView textView = (TextView) resumeView.findViewById(R.id.textView);
+        textView = (TextView) resumeView.findViewById(R.id.textView);
+        imageView = (ImageView) resumeView.findViewById(R.id.imageView2);
+
         APIHelper apiHelper = null;
         Context context = null;
         try {
@@ -87,9 +100,17 @@ public class Resume extends Fragment {
                 public void onApiSuccess(ApiResponse apiResponse) {
                     Log.i(TAG, "API sucess");
                     JSONObject jsonObject = apiResponse.getResponseDataAsJson();
+
+
                     Log.i(TAG, jsonObject.toString());
                     try {
-                        textView.setText(jsonObject.get("firstName").toString());
+                        String pictureURL = jsonObject.getString("pictureUrl");
+                        pictureURL = pictureURL.replace("\\", "");
+                        DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
+                        downloadImageTask.execute(pictureURL);
+                        imageView = downloadImageTask.getBmImage();
+                        Log.i(TAG, pictureURL);
+                        textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -100,7 +121,7 @@ public class Resume extends Fragment {
                     Log.i(TAG, LIApiError.toString());
                 }
             });
-        }*/
+        }
         /*
         Getting user data from Parse
          */
@@ -112,10 +133,12 @@ public class Resume extends Fragment {
     private void initializeView(View v) {
         CandidateQuery candidateQuery = new CandidateQuery();
 
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
 
         candidateDetails = candidateQuery.getCandidateDetails(sharedPreferences.getString("ObjectId", ""));
+
+
         Log.i(TAG, candidateDetails.getString("username"));
         candidateController = new CandidateController(candidateDetails);
 
@@ -189,7 +212,7 @@ public class Resume extends Fragment {
             }
 
             TextView item = (TextView) convertView.findViewById(R.id.text5);
-            ImageView edit=(ImageView)convertView.findViewById(R.id.edit);
+            ImageView edit = (ImageView) convertView.findViewById(R.id.edit);
 
             edit.setOnClickListener(new View.OnClickListener() {
 
@@ -200,10 +223,10 @@ public class Resume extends Fragment {
                      */
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                     alertDialog.setTitle("Edit Wizard");
-                    alertDialog.setMessage("Enter new "+ groupData.get(groupPosition));
+                    alertDialog.setMessage("Enter new " + groupData.get(groupPosition));
 
                     final EditText input = new EditText(getActivity());
-                    input.setHint(childData.get( groupData.get(groupPosition)).get(childPosition));
+                    input.setHint(childData.get(groupData.get(groupPosition)).get(childPosition));
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     input.setLayoutParams(lp);
                     alertDialog.setView(input);
@@ -296,6 +319,7 @@ public class Resume extends Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
+
 }
 
 

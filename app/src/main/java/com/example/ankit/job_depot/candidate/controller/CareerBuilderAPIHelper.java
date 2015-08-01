@@ -24,7 +24,7 @@ import javax.xml.parsers.SAXParserFactory;
  * Created by AnkitT. on 7/31/2015.
  */
 
-public class CareerBuilderAPICalls{
+public class CareerBuilderAPIHelper {
 
     private final String API_KEY = "WDHN1MW6NJX0KB74CJPD";
     private final String jobSearchURL = "http://api.careerbuilder.com/v2/jobsearch";

@@ -133,8 +133,28 @@ public class PostJob extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("Abhartha", "onPause of Post Job");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("Abhartha", "onDetach of Post Job");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Abhartha", "onDestroy of Post Job");
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        Log.d("Abhartha", "onResume of Post Job");
+
     }
 
     public class DatePickerFragment extends DialogFragment

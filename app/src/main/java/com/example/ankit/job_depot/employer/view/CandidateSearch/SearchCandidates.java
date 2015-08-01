@@ -48,6 +48,30 @@ public class SearchCandidates extends Fragment {
         return jobsView;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("Abhartha", "onPause of Search Candidate");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("Abhartha", "onDetach of Search Candidate");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Abhartha", "onDestroy of Search Candidate");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Abhartha", "onResume of Search Candidate");
+
+    }
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

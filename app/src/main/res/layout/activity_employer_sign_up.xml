@@ -19,7 +19,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Job Depot"
         android:id="@+id/textView13"
-        android:textColor="#0000FF"
+        android:textColor="#ff8280ff"
         android:textSize="@dimen/abc_action_bar_stacked_max_height"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -77,7 +77,8 @@
         android:id="@+id/buttonEmployerSignUp"
         android:layout_above="@+id/signInLink"
         android:layout_alignRight="@+id/textBoxPassword"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:background="#ff8280ff" />
 
     <TextView
         android:layout_width="wrap_content"

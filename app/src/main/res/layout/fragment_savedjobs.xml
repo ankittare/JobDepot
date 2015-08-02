@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-
+    android:background="#ffffff"
     >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saved Jobs"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Your saved Jobs"
         android:id="@+id/textView3"
-        android:layout_gravity="center_horizontal|top"
+        android:gravity="center_vertical|center_horizontal"
         android:textStyle="bold"
-        android:typeface="sans"
-        android:textColor="#ffff280e"
-        android:gravity="center|center_vertical|center_horizontal|clip_horizontal"
+        android:typeface="serif"
+        android:textColor="#ffff0e40"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -24,6 +24,6 @@
         android:layout_gravity="center|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:paddingTop="70dp"
-        android:layout_below="@+id/textView3" />
+        android:paddingTop="70dp" />
+
 </RelativeLayout>

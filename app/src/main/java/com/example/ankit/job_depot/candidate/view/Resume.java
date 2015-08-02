@@ -104,7 +104,7 @@ public class Resume extends Fragment {
 
                     Log.i(TAG, parseUsername);
                     CandidateQuery candidateQuery = new CandidateQuery();
-                    String id = candidateQuery.getObjectId(sharedPreferences.getString("username", ""));
+                    String id = candidateQuery.getObjectId(parseUsername);
                     Log.i(TAG, id);
                     candidateDetails = candidateQuery.getCandidateDetails(id);
                     editor.putString("ObjectId", candidateDetails.getObjectId());

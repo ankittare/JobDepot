@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.controller.CandidateController;
 import com.example.ankit.job_depot.candidate.controller.DownloadImageTask;
+import com.example.ankit.job_depot.candidate.model.DAO.AuthQuery;
 import com.example.ankit.job_depot.candidate.model.DAO.CandidateQuery;
 import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.errors.LIApiError;
@@ -100,22 +101,31 @@ public class Resume extends Fragment {
                     Putting username in shared preferences because for some reason i am getting null when trying to access instance variables outside anonymous inner class
                     */
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username", parseUsername);
+
 
                     Log.i(TAG, parseUsername);
-                    CandidateQuery candidateQuery = new CandidateQuery();
-                    String id = candidateQuery.getObjectId(parseUsername);
-                    Log.i(TAG, id);
-                    candidateDetails = candidateQuery.getCandidateDetails(id);
-                    editor.putString("ObjectId", candidateDetails.getObjectId());
-                    editor.commit();
+
                     pictureURL = jsonObject.getString("pictureUrl");
                     pictureURL = pictureURL.replace("\\", "");
                     DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
                     downloadImageTask.execute(pictureURL);
                     imageView = downloadImageTask.getBmImage();
                     textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
-                    initializeView(resumeView, candidateDetails);
+                    if (new AuthQuery().verifyCredential(parseUsername))
+                    {
+                        editor.putString("username", parseUsername);
+                        CandidateQuery candidateQuery = new CandidateQuery();
+                        String id = candidateQuery.getObjectId(parseUsername);
+                        Log.i(TAG, id);
+                        candidateDetails = candidateQuery.getCandidateDetails(id);
+                        editor.putString("ObjectId", candidateDetails.getObjectId());
+                        editor.commit();
+                        initializeView(resumeView, candidateDetails);
+                    }
+
+                    else
+                        Toast.makeText(getActivity().getBaseContext(),
+                                "Not enough data!", Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

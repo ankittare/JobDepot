@@ -128,22 +128,27 @@ public class candidateHome extends ActionBarActivity implements ActionBar.TabLis
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Fragment fragment;
             switch (position){
                 case 0:
-                    return new Jobs();
+                    fragment= new Jobs();
+                    break;
                 case 1:{
-                    return new Resume();
+                    fragment= new Resume();
+                    break;
                 }
                 case 2:{
-                    return new SavedJobs();
+                    fragment= new SavedJobs();
+                    break;
                 }
                 case 3:{
-                    return new Settings();
+                    fragment= new Settings();
+                    break;
                 }
                 default:
-                    break;
+                    return PlaceholderFragment.newInstance(position + 1);
             }
-            return PlaceholderFragment.newInstance(position + 1);
+            return fragment;
         }
 
         @Override

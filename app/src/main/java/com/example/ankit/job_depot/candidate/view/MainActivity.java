@@ -17,22 +17,16 @@ import android.widget.Toast;
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.model.DAO.AuthQuery;
 import com.example.ankit.job_depot.candidate.model.DAO.CandidateQuery;
-import com.linkedin.platform.APIHelper;
 import com.linkedin.platform.LISession;
 import com.linkedin.platform.LISessionManager;
-import com.linkedin.platform.errors.LIApiError;
 import com.linkedin.platform.errors.LIAuthError;
-import com.linkedin.platform.listeners.ApiListener;
-import com.linkedin.platform.listeners.ApiResponse;
 import com.linkedin.platform.listeners.AuthListener;
 import com.linkedin.platform.utils.Scope;
 import com.parse.Parse;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
@@ -186,14 +180,15 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_LONG).show();
         } else {
             AuthQuery authQuery = new AuthQuery();
-            if (authQuery.verifyCredential(username.getText().toString(), password.getText().toString())) {
-                Log.i(TAG, "User verified");
+            Map.Entry<Boolean, String> verificationResult=authQuery.verifyCredential(username.getText().toString(), password.getText().toString());
+            if (verificationResult.getKey()) {
+                Log.i(TAG,verificationResult.getValue());
                 /*
                 Get signed in user's object ID and put it in shared preferences
                 check if its already there in shared preferences, if not then put it there
                  */
 
-                if (sharedPreferences.getString("ObjectId", "") == null || sharedPreferences.getString("ObjectId", "").equals("")) {
+                if (sharedPreferences.contains("ObjectId")) {
                     CandidateQuery candidateQuery = new CandidateQuery();
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("ObjectId", candidateQuery.getObjectId(username.getText().toString()));
@@ -207,7 +202,7 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(getApplicationContext(), candidateHome.class);
                 startActivity(intent);
             } else
-                Toast.makeText(getApplicationContext(), "UserName or Password Incorrect", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), verificationResult.getValue(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -224,36 +219,5 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         LISessionManager.getInstance(getApplicationContext()).onActivityResult(this, requestCode, resultCode, data);
-    }
-
-    public String getEmailaddress() {
-        String topCardUrl = "https://api.linkedin.com/v1/people/~:(id,firstName,headline,positions,picture-url)?format=json";
-        APIHelper apiHelper = null;
-        //Log.i(TAG, "Context="+get.toString());
-        if (getApplicationContext() != null) {
-            Log.i(TAG, "------------");
-            apiHelper = APIHelper.getInstance(getApplicationContext());
-            apiHelper.getRequest(getApplicationContext(), topCardUrl, new ApiListener() {
-                @Override
-                public void onApiSuccess(ApiResponse apiResponse) {
-                    Log.i(TAG, "API sucess");
-
-                    JSONObject jsonObject = apiResponse.getResponseDataAsJson();
-                    Log.i(TAG, jsonObject.toString());
-                    try {
-                        email = jsonObject.getString("email-address");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onApiError(LIApiError LIApiError) {
-                    Log.i(TAG, LIApiError.toString());
-                }
-            });
-        }
-        Log.i(TAG, email);
-        return email;
     }
 }

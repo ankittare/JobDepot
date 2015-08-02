@@ -12,6 +12,7 @@ import com.parse.ParseQuery;
  */
 public class CandidateQuery {
 
+    private final String TAG=getClass().getSimpleName();
     public ParseObject getCandidateDetails(@NonNull String ID) {
         ParseObject result=null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
@@ -33,6 +34,7 @@ public class CandidateQuery {
     How to deal with users with same username?
      */
     public String getObjectId(@NonNull String username){
+        Log.i(TAG, username);
         ParseObject result=null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
         query.whereEqualTo("username",username);
@@ -44,4 +46,6 @@ public class CandidateQuery {
         Log.i("CandidateQUery", result.getObjectId());
         return result.getObjectId();
     }
+
+
 }

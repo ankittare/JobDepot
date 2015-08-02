@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
 import com.example.ankit.job_depot.R;
@@ -45,33 +46,41 @@ public class SavedJobs extends Fragment {
 
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         jobsQuery=new JobsQuery();
-        if(savedjobsData==null){
-            //Log.i(TAG,sharedPreferences.getString("ObjectId", ""));
-            savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("username", ""));
+
+        if(sharedPreferences.contains("username") && !sharedPreferences.getString("username", "").equals("") ){
+            if(savedjobsData==null ){
+                //Log.i(TAG,sharedPreferences.getString("ObjectId", ""));
+                savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("username", ""));
+            }
+
+            Map<String, List<String>> childData=new HashMap<String, List<String>>();
+            for(Map<String, String> entry : savedjobsData){
+                groupData.add(entry.get("jobTitle"));
+                List<String> _temp=new ArrayList<String>();
+                _temp.add("Description: "+entry.get("jobdesc"));
+                _temp.add("Location: "+ entry.get("jobLocation"));
+                _temp.add("Status: "+entry.get("status"));
+                _temp.add("Time Saved: "+entry.get("timesaved"));
+                Log.i(TAG,entry.get("jobdesc") );
+                childData.put(entry.get("jobTitle"), _temp);
+            }
+
+            expandableListView = (ExpandableListView) savedjobView.findViewById(R.id.expandableListView2);
+            ExpandableListAdapter expListAdapter = new ExpandableListAdapter(getActivity(), groupData, childData);
+
+            expandableListView.setAdapter(expListAdapter);
+            DisplayMetrics dm = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+            int width = dm.widthPixels;
+
+            expandableListView.setIndicatorBounds(width - getDipsFromPixel(35), width
+                    - getDipsFromPixel(5));
+        }
+        else{
+            Toast.makeText(getActivity().getBaseContext(),
+                    "No data Found in our database!", Toast.LENGTH_SHORT).show();
         }
 
-        Map<String, List<String>> childData=new HashMap<String, List<String>>();
-        for(Map<String, String> entry : savedjobsData){
-            groupData.add(entry.get("jobTitle"));
-            List<String> _temp=new ArrayList<String>();
-            _temp.add("Description: "+entry.get("jobdesc"));
-            _temp.add("Location: "+ entry.get("jobLocation"));
-            _temp.add("Status: "+entry.get("status"));
-            _temp.add("Time Saved: "+entry.get("timesaved"));
-            Log.i(TAG,entry.get("jobdesc") );
-            childData.put(entry.get("jobTitle"), _temp);
-        }
-
-        expandableListView = (ExpandableListView) savedjobView.findViewById(R.id.expandableListView2);
-        ExpandableListAdapter expListAdapter = new ExpandableListAdapter(getActivity(), groupData, childData);
-
-        expandableListView.setAdapter(expListAdapter);
-        DisplayMetrics dm = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-
-        expandableListView.setIndicatorBounds(width - getDipsFromPixel(35), width
-                - getDipsFromPixel(5));
 
         return savedjobView;
     }

@@ -15,32 +15,38 @@
         android:layout_alignParentLeft="true"
         android:layout_marginTop="135dp" />
 
-    <SearchView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/searchView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
-        android:queryHint="Jobs by industry" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Near By Jobs"
         android:id="@+id/textView11"
         android:textColor="#ff312bff"
-        android:layout_below="@+id/searchView"
-        android:layout_alignRight="@+id/searchView" />
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Recommended Jobs"
+        android:text="We Recommend..."
         android:id="@+id/textView12"
-        android:typeface="monospace"
+        android:typeface="serif"
         android:textColor="@android:color/holo_red_dark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <SearchView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchView"
+        android:queryHint="Jobs by industry"
         android:layout_below="@+id/textView11"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView11"
+        android:layout_alignEnd="@+id/textView11" />
 
 </RelativeLayout>

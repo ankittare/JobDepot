@@ -2,7 +2,7 @@ package com.example.ankit.job_depot.candidate.view;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Geocoder;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -53,7 +53,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         nearbyJobs = new ArrayList<CBJobs>();
         careerBuilderAPIHelper = new CareerBuilderAPIHelper();
-        extras =getArguments();
+        extras = getArguments();
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 
@@ -74,16 +74,30 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         LocationManager locationManager;
         LocationListener locationListener;
         super.onResume();
-
         if (map == null) {
-
             map = fragment.getMap();
 
-            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-            locationListener = new LocationListener() {
+
+            Criteria crit = new Criteria();
+            crit.setAccuracy(Criteria.ACCURACY_FINE);
+
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            String best = locationManager.getBestProvider(crit, false);
+            locationListener=new CurrentLocationListener();
+            locationManager.requestLocationUpdates(best, 1000, 0, locationListener);
+            LatLng sydney = new LatLng(-33.867, 151.206);
+            map.addMarker(new MarkerOptions()
+                    .title("Sydney")
+                    .snippet("The most populous city in Australia.")
+                    .position(sydney));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+
+            /*locationListener = new LocationListener() {
+                @Override
                 public void onLocationChanged(Location location) {
                     // Called when a new location is found by the network location provider.
+                    Log.i(TAG, "Location Changed");
                     Geocoder geocoder = new Geocoder(context);
                     address = null;
                     try {
@@ -94,16 +108,15 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
                     Log.i("Current Location: ", address.toString());
 
-                    if(extras.containsKey("queryType")){
+                    /*if(extras.containsKey("queryType")){
                         if(extras.getCharSequence("queryType").equals("Location")){
                             String city = address.get(0).getAddressLine(2).split(",")[0];
                             Log.i(TAG, city);
                             new getNearByJobs().execute(city);
                         }
                         else if(extras.getCharSequence("queryType").equals("Search")){
-                            /*
-                            Implement this method
-                             */
+
+
                         }
                     }
 
@@ -114,9 +127,9 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                     map.addMarker(new MarkerOptions()
                                     .title(address.get(0).getAddressLine(0) + " " + address.get(0).getAddressLine(1))
                                     .position(loc)
-                            ///.icon(BitmapDescriptorFactory.fromResource(R.drawable.direction_arrow))
                     );
                 }
+
 
                 public void onStatusChanged(String provider, int status, Bundle extras) {
                 }
@@ -126,12 +139,10 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
                 @Override
                 public void onProviderDisabled(String provider) {
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            "Provider Not Available!",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getBaseContext(), "Provider Not Available!", Toast.LENGTH_LONG).show();
                 }
-            };
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 10, locationListener);
+            };*/
+
             //locationManager.removeUpdates(locationListener);
         }
     }
@@ -188,12 +199,12 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                              */
                             Log.i(TAG, "On long click");
                             Log.i(TAG, cbJobs.getJobURL());
-                            Bundle extras=new Bundle();
-                            extras.putCharSequence("CompanyURL",cbJobs.getJobURL() );
+                            Bundle extras = new Bundle();
+                            extras.putCharSequence("CompanyURL", cbJobs.getJobURL());
                             Toast.makeText(getActivity().getApplicationContext(),
                                     "Opening Webpage...",
                                     Toast.LENGTH_LONG).show();
-                            job_web_view newFragment =  new job_web_view();
+                            job_web_view newFragment = new job_web_view();
                             newFragment.setArguments(extras);
                             android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.map, newFragment);
@@ -222,6 +233,26 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, locationListener);
     }
 
+    private class CurrentLocationListener implements LocationListener{
+        private final String TAG=getClass().getSimpleName();
+        @Override
+        public void onLocationChanged(Location location) {
+            Log.i(TAG, location.toString());
+        }
 
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.i(TAG, provider);
+        }
 
+        @Override
+        public void onProviderEnabled(String provider) {
+            Log.i(TAG, provider);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            Log.i(TAG, provider);
+        }
+    }
 }

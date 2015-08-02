@@ -23,11 +23,12 @@ public class CandidateQuery {
         // synchronized (this){]
         try {
             result=query.getFirst();
+            return result;
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
         ///Log.i("CandidateQUery", result.get(0).get("workexp")+"");
-        return result;
     }
 
     /*
@@ -47,5 +48,34 @@ public class CandidateQuery {
         return result.getObjectId();
     }
 
+    public Boolean createUser(@NonNull String username){
+        ParseObject newUser=new ParseObject("candidateDetails");
+        newUser.put("username", username);
+        try {
+            newUser.save();
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
+    public Boolean updateProfile(@NonNull String username, String skills, String education, String work, String password){
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        query.whereEqualTo("username", username);
+        ParseObject newUser= null;
+        try {
+            newUser = query.getFirst();
+            if(skills!=null && (!skills.equals(""))) newUser.put("skills", skills);
+            if(education!=null && (!education.equals(""))) newUser.put("education", education);
+            if(work!=null && (!work.equals(""))) newUser.put("workexp", work);
+            if(password!=null && (!password.equals(""))) newUser.put("password", password);
+            newUser.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 
 }

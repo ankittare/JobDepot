@@ -95,6 +95,7 @@ public class Resume extends Fragment {
                 JSONObject jsonObject = apiResponse.getResponseDataAsJson();
                 String pictureURL = null;
                 try {
+                    Log.i(TAG, jsonObject.getString("positions"));
                     parseUsername = jsonObject.getString("firstName") + jsonObject.getString("lastName");
                     parseUsername = parseUsername.toLowerCase();
                     /*
@@ -102,32 +103,35 @@ public class Resume extends Fragment {
                     */
                     SharedPreferences.Editor editor = sharedPreferences.edit();
 
-
                     Log.i(TAG, parseUsername);
 
                     pictureURL = jsonObject.getString("pictureUrl");
                     pictureURL = pictureURL.replace("\\", "");
                     DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
                     downloadImageTask.execute(pictureURL);
+                    editor.putString("pictureURL", pictureURL);
                     imageView = downloadImageTask.getBmImage();
                     textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
-                    if (new AuthQuery().verifyCredential(parseUsername))
-                    {
+                    CandidateQuery candidateQuery = new CandidateQuery();
+                    if (!sharedPreferences.contains("username")) {
                         editor.putString("username", parseUsername);
-                        CandidateQuery candidateQuery = new CandidateQuery();
-                        String id = candidateQuery.getObjectId(parseUsername);
-                        Log.i(TAG, id);
-                        candidateDetails = candidateQuery.getCandidateDetails(id);
-                        editor.putString("ObjectId", candidateDetails.getObjectId());
-                        editor.commit();
-                        initializeView(resumeView, candidateDetails);
+                        if (new AuthQuery().verifyCredential(parseUsername) == false) {
+                            if (candidateQuery.createUser(parseUsername))
+                                Log.i(TAG, "Entry made in database");
+                            else
+                                Log.i(TAG, "Something went wrong as usual");
+                        }
                     }
-
-                    else
-                        Toast.makeText(getActivity().getBaseContext(),
-                                "Not enough data!", Toast.LENGTH_SHORT).show();
+                    String id = candidateQuery.getObjectId(parseUsername);
+                    candidateDetails = candidateQuery.getCandidateDetails(id);
+                    editor.putString("ObjectId", candidateDetails.getObjectId());
+                    initializeView(resumeView, candidateDetails);
+                    editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (NullPointerException ne) {
+                    Toast.makeText(getActivity().getBaseContext(),
+                            "Not enough data! Go to 'Settings' and fill more data", Toast.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, pictureURL);
             }
@@ -152,9 +156,12 @@ public class Resume extends Fragment {
 
         childData = new HashMap<String, List<String>>();
 
-        fillEducationData();
-        fillSkillsData();
-        fillWorkData();
+        if (candidateDetails.getString("education") != null)
+            fillEducationData();
+        if (candidateDetails.getString("skills") != null)
+            fillSkillsData();
+        if (candidateDetails.getString("workexp") != null)
+            fillWorkData();
 
 
         expandableListView = (ExpandableListView) v.findViewById(R.id.resumeDetails);

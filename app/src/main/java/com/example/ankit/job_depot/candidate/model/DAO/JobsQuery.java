@@ -80,10 +80,11 @@ public class JobsQuery {
     /*
     searching for job in candidate list
      */
-    public Boolean isJobApplied(@NonNull String jobID){
+    public Boolean isJobApplied(@NonNull String jobID, @NonNull String userID){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
         ParseObject queryString = null;
         query.whereEqualTo("jobID", jobID);
+        query.whereEqualTo("studentCandidateID", userID);
         try {
             queryString = query.getFirst();
         } catch (ParseException e) {

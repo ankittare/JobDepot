@@ -15,7 +15,8 @@
         android:typeface="serif"
         android:textColor="#ffff0e40"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp" />
 
     <ExpandableListView
         android:layout_width="wrap_content"

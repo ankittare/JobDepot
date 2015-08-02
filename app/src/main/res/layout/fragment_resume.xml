@@ -3,27 +3,55 @@
     android:layout_height="wrap_content"
     android:background="#ffffff">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textAppearance="@android:style/TextAppearance.Small"
-        android:gravity="center|center_vertical|center_horizontal"
-        android:textStyle="bold"
-        android:typeface="monospace"
-        android:textColorHint="@color/background_material_light"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_alignParentRight="true" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="You"
+            android:id="@+id/textView14"
+            android:textColor="#ffff7e12"
+            android:typeface="serif"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_gravity="left" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textAppearance="@android:style/TextAppearance.Small"
+                android:gravity="center_vertical|right"
+                android:textStyle="bold"
+                android:typeface="monospace"
+                android:textColorHint="@color/background_material_light"
+                android:layout_alignBottom="@+id/imageView2"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/resumeDetails"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginTop="90dp"></ExpandableListView>
+
 </RelativeLayout>

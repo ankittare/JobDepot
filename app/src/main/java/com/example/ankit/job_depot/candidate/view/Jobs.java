@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.model.DAO.JobDetails;
 import com.example.ankit.job_depot.candidate.model.DAO.JobsQuery;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -185,29 +186,32 @@ public class Jobs extends android.support.v4.app.Fragment {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Log.i(TAG, "Dialog Onclick");
-                                    /*List<String> child =
-                                            laptopCollections.get(laptops.get(groupPosition));
-                                    child.remove(childPosition);
-                                    notifyDataSetChanged();*/
                                     /*
                                     Writing candidate data to Parse Cloud candidateList Table
                                      */
                                     ParseObject candidateApplyObject = new ParseObject("candidateList");
-                                    //Log.i(TAG,""+ laptopCollections.get(laptops.get(groupPosition)).get(2));
                                     String _jobID = laptopCollections.get(laptops.get(groupPosition)).get(2).split(": ")[1];
                                     Log.i(TAG, _jobID);
                                     /*
                                     Making sure that the candidate has not applied already
                                      */
-                                    if (new JobsQuery().isJobApplied(_jobID)) {
-                                        Toast.makeText(getActivity().getApplicationContext(),
-                                                "Already...",
-                                                Toast.LENGTH_LONG).show();
-                                    } else {
-                                        candidateApplyObject.put("jobID", _jobID);
-                                        candidateApplyObject.put("status", "Applied");
-                                        candidateApplyObject.put("studentCandidateID", sharedPreferences.getString("ObjectId", ""));
-                                        candidateApplyObject.saveInBackground();
+                                    try {
+                                        if (new JobsQuery().isJobApplied(_jobID, sharedPreferences.getString("ObjectId", ""))) {
+                                            Toast.makeText(getActivity().getApplicationContext(),
+                                                    "Already Applied",
+                                                    Toast.LENGTH_LONG).show();
+                                        } else {
+                                            candidateApplyObject.put("jobID", _jobID);
+                                            candidateApplyObject.put("status", "Applied");
+                                            candidateApplyObject.put("studentCandidateID", sharedPreferences.getString("ObjectId", ""));
+                                            try {
+                                                candidateApplyObject.save();
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    } catch (NullPointerException ne) {
+                                        ne.printStackTrace();
                                     }
                                 }
                             });

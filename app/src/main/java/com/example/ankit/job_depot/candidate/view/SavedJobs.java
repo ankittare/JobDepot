@@ -31,37 +31,38 @@ import java.util.Map;
 
 public class SavedJobs extends Fragment {
 
-    private final String TAG=getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
     private JobsQuery jobsQuery;
     private ExpandableListView expandableListView;
-    private List<Map<String, String>> savedjobsData=null;
+    private List<Map<String, String>> savedjobsData = null;
     private List<String> groupData;
     private SharedPreferences sharedPreferences;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View savedjobView=inflater.inflate(R.layout.fragment_savedjobs, container, false);
-        groupData=new ArrayList<String>();
+        View savedjobView = inflater.inflate(R.layout.fragment_savedjobs, container, false);
+        groupData = new ArrayList<String>();
 
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        jobsQuery=new JobsQuery();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        jobsQuery = new JobsQuery();
 
-        if(sharedPreferences.contains("username") && !sharedPreferences.getString("username", "").equals("") ){
-            if(savedjobsData==null ){
+        if (sharedPreferences.contains("username")) {
+
+            if (savedjobsData != null) {
                 //Log.i(TAG,sharedPreferences.getString("ObjectId", ""));
-                savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("username", ""));
+                savedjobsData.clear();
             }
-
-            Map<String, List<String>> childData=new HashMap<String, List<String>>();
-            for(Map<String, String> entry : savedjobsData){
+            savedjobsData = jobsQuery.getSavedJobs(sharedPreferences.getString("username", ""));
+            Map<String, List<String>> childData = new HashMap<String, List<String>>();
+            for (Map<String, String> entry : savedjobsData) {
                 groupData.add(entry.get("jobTitle"));
-                List<String> _temp=new ArrayList<String>();
-                _temp.add("Description: "+entry.get("jobdesc"));
-                _temp.add("Location: "+ entry.get("jobLocation"));
-                _temp.add("Status: "+entry.get("status"));
-                _temp.add("Time Saved: "+entry.get("timesaved"));
-                Log.i(TAG,entry.get("jobdesc") );
+                List<String> _temp = new ArrayList<String>();
+                _temp.add("Description: " + entry.get("jobdesc"));
+                _temp.add("Location: " + entry.get("jobLocation"));
+                _temp.add("Status: " + entry.get("status"));
+                _temp.add("Time Saved: " + entry.get("timesaved"));
+                Log.i(TAG, entry.get("jobdesc"));
                 childData.put(entry.get("jobTitle"), _temp);
             }
 
@@ -75,8 +76,7 @@ public class SavedJobs extends Fragment {
 
             expandableListView.setIndicatorBounds(width - getDipsFromPixel(35), width
                     - getDipsFromPixel(5));
-        }
-        else{
+        } else {
             Toast.makeText(getActivity().getBaseContext(),
                     "No data Found in our database!", Toast.LENGTH_SHORT).show();
         }
@@ -151,7 +151,7 @@ public class SavedJobs extends Fragment {
 
             if (convertView == null) {
                 LayoutInflater infalInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(R.layout.grouplayout_savedjobs,null);
+                convertView = infalInflater.inflate(R.layout.grouplayout_savedjobs, null);
             }
             TextView item = (TextView) convertView.findViewById(R.id.text3);
             item.setTypeface(null, Typeface.BOLD);
@@ -167,9 +167,11 @@ public class SavedJobs extends Fragment {
             return true;
         }
     }
+
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
     }
+
     public int getDipsFromPixel(float pixels) {
         // Get the screen's density scale
         final float scale = getResources().getDisplayMetrics().density;

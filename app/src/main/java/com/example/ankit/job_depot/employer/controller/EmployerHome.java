@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.example.ankit.job_depot.employer.view.JobHistory.PostedJobHistory;
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.employer.view.CandidateSearch.SearchCandidates;
 
+import java.util.List;
 import java.util.Locale;
 import static com.example.ankit.job_depot.employer.view.LoginAuthentication.EmployerLogin.EMPLOYER_NAME;
 
@@ -112,6 +114,19 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+        int position = tab.getPosition();
+
+        Log.d("Abhartha", "OnTabReselected" + position);
+
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        if(fragmentList == null || fragmentList.size() == 0) {
+            return;
+        }
+        for (Fragment fragment : fragmentList) {
+            if(fragment instanceof PostedJobHistory) {
+                //((PostedJobHistory) fragment).updateFragmentMethod();
+            }
+        }
     }
 
     /**
@@ -148,7 +163,6 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 4;
         }
 

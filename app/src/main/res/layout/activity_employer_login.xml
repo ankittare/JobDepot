@@ -43,7 +43,8 @@
         android:text="Login"
         android:id="@+id/buttonEmployerSignUp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#ff8f93ff" />
 
     <TextView
         android:layout_width="wrap_content"

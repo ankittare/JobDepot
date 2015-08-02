@@ -35,7 +35,9 @@
         android:text="Medium Text"
         android:id="@+id/textViewName"
         android:layout_gravity="center"
-        android:layout_margin="40dp" />
+        android:layout_margin="40dp"
+        android:textSize="25dp"
+        android:textColor="#ffff4587" />
 </LinearLayout>
 
 

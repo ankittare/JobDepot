@@ -7,16 +7,22 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
+import com.google.android.gms.tagmanager.Container;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -29,12 +35,17 @@ class JobDetails {
     private String jobTitle;
     private String jobDesc;
     private String jobLocation;
+    private String skillsReq, experience, jobType;
 
-    public JobDetails(@NonNull String id, @NonNull String jobTitle, @NonNull String jobDesc, @NonNull String jobLocation) {
+    public JobDetails(@NonNull String id, @NonNull String jobTitle, @NonNull String jobDesc,
+                      @NonNull String jobLocation, String skillsReq, String experience, String jobType) {
         this.ID=id;
         this.jobTitle = jobTitle;
         this.jobDesc = jobDesc;
         this.jobLocation = jobLocation;
+        this.experience = experience;
+        this.jobType = jobType;
+        this.skillsReq = skillsReq;
     }
 
     public String getId() {
@@ -52,6 +63,18 @@ class JobDetails {
     public String getJobLocation() {
         return jobLocation;
     }
+
+    public String getskillsReq() {
+        return skillsReq;
+    }
+
+    public String getexperience() {
+        return experience;
+    }
+
+    public String getjobType() {
+        return jobType;
+    }
 }
 
 public class PostedJobHistory extends Fragment {
@@ -59,14 +82,16 @@ public class PostedJobHistory extends Fragment {
     private List<Map<String, String>> savedjobsData=null;
     private List<String> groupData;
     private ArrayList<JobDetails> jobDetails;
-
+    Fragment myfragment;
 
     String employerName;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View jobsView = inflater.inflate(R.layout.fragment_posted_job_history, container, false);
+
+        myfragment = this;
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
         employerName = sharedPreferences.getString("employerName", "ankitb");
@@ -75,7 +100,8 @@ public class PostedJobHistory extends Fragment {
             jobDetails=new ArrayList<JobDetails>();
             EmployerHistory jobsQuery=new EmployerHistory();
             for(ParseObject o:jobsQuery.getJobs(employerName)){
-                JobDetails _jd = new JobDetails( o.getObjectId(),o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"));
+                JobDetails _jd = new JobDetails( o.getObjectId(),o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"),
+                        o.getString("skillsRequired"), o.getString("expRequired"),o.getString("jobType"));
                 jobDetails.add(_jd);
             }
         }
@@ -90,6 +116,9 @@ public class PostedJobHistory extends Fragment {
             List<String> _temp=new ArrayList<String>();
             _temp.add("Description: "+jd.getJobDesc());
             _temp.add("Location: "+jd.getJobLocation());
+            _temp.add("Skills Required: "+jd.getskillsReq());
+            _temp.add("Job Type: "+jd.getjobType());
+            _temp.add("Experience Required: "+jd.getexperience() + " years");
             childData.put(jd.getJobTitle(),_temp);
         }
         expandableListView = (ExpandableListView) jobsView.findViewById(R.id.expandableListViewJobHistory);
@@ -104,7 +133,47 @@ public class PostedJobHistory extends Fragment {
                 - getDipsFromPixel(5));
         //sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
+        Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = manager.beginTransaction();
+                Fragment newFragment = myfragment;
+                myfragment.onDestroy();
+                ft.remove(myfragment);
+                ft.replace(container.getId(),myfragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }
+        });
         return jobsView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        Log.d("Abhartha", "onPause of Job History");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("Abhartha", "onDetach of Job History");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Abhartha", "onDestroy of Job History");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d("Abhartha", "onResume of Job History");
+
     }
 
     private class ExpandableListAdapter extends BaseExpandableListAdapter {

@@ -116,4 +116,29 @@ public class EmployerSettings extends Fragment {
         );
         return empSettings;
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("Abhartha", "onPause of Settings");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d("Abhartha", "onDetach of Settings");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Abhartha", "onDestroy of Settings");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("Abhartha", "onResume of Settings");
+
+    }
 }

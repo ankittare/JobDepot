@@ -21,7 +21,7 @@ import java.util.List;
 public class SearchCandidates extends Fragment {
 
     String keyword;
-    Button SearchButton;
+    Button SearchButton,AppliedCandidates;
     ImageButton SearchImageButton;
     EditText SearchField, SearchLoc, SearchSkills, SearchExp;
     String employerName;
@@ -35,6 +35,7 @@ public class SearchCandidates extends Fragment {
         SearchExp = (EditText)jobsView.findViewById(R.id.editTextSearchExp);
         SearchButton = (Button)jobsView.findViewById(R.id.buttonSearch);
         SearchImageButton = (ImageButton)jobsView.findViewById(R.id.imageButtonSearch);
+        AppliedCandidates = (Button)jobsView.findViewById(R.id.buttonAppliedCandidates);
 
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
@@ -42,7 +43,7 @@ public class SearchCandidates extends Fragment {
 
         SearchButton.setOnClickListener(onClickListener);
         SearchImageButton.setOnClickListener(onClickListener);
-
+        AppliedCandidates.setOnClickListener(appliedCandidatesClicked);
 
 
         return jobsView;
@@ -72,6 +73,17 @@ public class SearchCandidates extends Fragment {
         Log.d("Abhartha", "onResume of Search Candidate");
 
     }
+    private View.OnClickListener appliedCandidatesClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AppliedCandidatesList newFragment = new AppliedCandidatesList();
+            android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.searchcandidatefragment, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    };
+
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

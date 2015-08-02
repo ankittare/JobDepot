@@ -40,4 +40,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_job_information">JobInformation</string>
     <string name="google_map_key">AIzaSyDO3lUIhH3qQcT9jvaWBcmGLcTxsq1_Vj0</string>
+    <string name="title_activity_applied_candidate_list">AppliedCandidateList</string>
 </resources>

@@ -45,14 +45,14 @@ public class EmployerHistory {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
         List<ParseObject> queryString=null;
         query.whereEqualTo("username", candidateName);
-        Log.d("Abhartha",query.toString());
+        Log.d("Abhartha", query.toString());
 
         try {
             queryString=query.find();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.d("Abhartha",queryString.toString());
+        Log.d("Abhartha", queryString.toString());
         return queryString.get(0);
     }
 
@@ -176,6 +176,66 @@ public class EmployerHistory {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    public List<ParseObject> getCandidatesAppliedList(String employerName) {
+        List<ParseObject> result = new ArrayList<ParseObject>();
+        List<ParseObject> postedJobs = new ArrayList<ParseObject>();
+        List<String> postedJobIDs = new ArrayList<String>();
+        ParseQuery employerID = ParseQuery.getQuery("JobDetails");
+        employerID.whereEqualTo("employerName", employerName);
+        try {
+            postedJobs = employerID.find();
+            for(int i=0; i< postedJobs.size(); i++) {
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<ParseObject> getJobIDs(String employerName) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("JobDetails");
+        Log.d("getJobIDs", employerName);
+        query.whereEqualTo("employerName", employerName);
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("getJobIDs", result.toString());
+        return result;
+    }
+
+    public List<ParseObject> getAppliedCandidateIDs(String jobID) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
+        Log.d("getJobIDs", jobID);
+        query.whereEqualTo("jobID", jobID);
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("getJobIDs", result.toString());
+        return result;
+    }
+
+    public List<ParseObject> getCandidateDetails(String candidateID) {
+        List<ParseObject> result=new ArrayList<ParseObject>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        Log.d("getJobIDs", candidateID);
+        query.whereEqualTo("objectId", candidateID);
+        try {
+            result=query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.d("objectID", result.toString());
         return result;
     }
 }

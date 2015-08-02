@@ -17,6 +17,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.candidate.model.DAO.JobDetails;
@@ -61,6 +62,7 @@ public class Jobs extends android.support.v4.app.Fragment {
             List<String> _temp = new ArrayList<String>();
             _temp.add("Description: " + jd.getJobDesc());
             _temp.add("Location: " + jd.getJobLocation());
+            _temp.add("Job ID: " + jd.getId());
             childData.put(jd.getJobTitle(), _temp);
         }
 
@@ -87,7 +89,7 @@ public class Jobs extends android.support.v4.app.Fragment {
                 ;
                 android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_Container, newFragment);
-                Bundle extras=new Bundle();
+                Bundle extras = new Bundle();
                 extras.putCharSequence("queryType", "Location");
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -114,7 +116,7 @@ public class Jobs extends android.support.v4.app.Fragment {
                 ;
                 android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_Container, newFragment);
-                Bundle extras=new Bundle();
+                Bundle extras = new Bundle();
                 extras.putCharSequence("queryType", "Search");
                 extras.putCharSequence("queryString", query);
                 newFragment.setArguments(extras);
@@ -191,10 +193,22 @@ public class Jobs extends android.support.v4.app.Fragment {
                                     Writing candidate data to Parse Cloud candidateList Table
                                      */
                                     ParseObject candidateApplyObject = new ParseObject("candidateList");
-                                    candidateApplyObject.put("jobID", jobDetailses.get(childPosition).getId());
-                                    candidateApplyObject.put("status", "Applied");
-                                    candidateApplyObject.put("studentCandidateID", sharedPreferences.getString("ObjectId", ""));
-                                    candidateApplyObject.saveInBackground();
+                                    //Log.i(TAG,""+ laptopCollections.get(laptops.get(groupPosition)).get(2));
+                                    String _jobID = laptopCollections.get(laptops.get(groupPosition)).get(2).split(": ")[1];
+                                    Log.i(TAG, _jobID);
+                                    /*
+                                    Making sure that the candidate has not applied already
+                                     */
+                                    if (new JobsQuery().isJobApplied(_jobID)) {
+                                        Toast.makeText(getActivity().getApplicationContext(),
+                                                "Already...",
+                                                Toast.LENGTH_LONG).show();
+                                    } else {
+                                        candidateApplyObject.put("jobID", _jobID);
+                                        candidateApplyObject.put("status", "Applied");
+                                        candidateApplyObject.put("studentCandidateID", sharedPreferences.getString("ObjectId", ""));
+                                        candidateApplyObject.saveInBackground();
+                                    }
                                 }
                             });
                     builder.setNegativeButton("No",

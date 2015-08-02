@@ -107,7 +107,6 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                         }
                     }
 
-
                     LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
 
                     map.setMyLocationEnabled(true);

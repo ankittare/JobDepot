@@ -77,4 +77,22 @@ public class JobsQuery {
         }
         return result;
     }
+    /*
+    searching for job in candidate list
+     */
+    public Boolean isJobApplied(@NonNull String jobID){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
+        ParseObject queryString = null;
+        query.whereEqualTo("jobID", jobID);
+        try {
+            queryString = query.getFirst();
+        } catch (ParseException e) {
+            Log.e(TAG, "Some exceptions are meant to happen in Life");
+        }
+        // notifyAll();
+       if(queryString!=null)
+           return true;
+        else
+           return false;
+    }
 }

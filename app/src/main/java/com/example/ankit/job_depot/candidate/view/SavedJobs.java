@@ -46,7 +46,8 @@ public class SavedJobs extends Fragment {
         sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         jobsQuery=new JobsQuery();
         if(savedjobsData==null){
-            savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("ObjectId", ""));
+            //Log.i(TAG,sharedPreferences.getString("ObjectId", ""));
+            savedjobsData=jobsQuery.getSavedJobs(sharedPreferences.getString("username", ""));
         }
 
         Map<String, List<String>> childData=new HashMap<String, List<String>>();

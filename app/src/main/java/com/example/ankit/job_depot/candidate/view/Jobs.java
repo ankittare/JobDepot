@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.ankit.job_depot.R;
@@ -32,6 +33,7 @@ public class Jobs extends android.support.v4.app.Fragment {
     private ArrayList<JobDetails> jobDetailses;
     private ExpandableListView listView;
     private TextView nearByJobs;
+    private SearchView searchView;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -40,27 +42,28 @@ public class Jobs extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View jobsView = inflater.inflate(R.layout.fragment_jobs, container, false);
 
-        if(jobDetailses==null){
-            jobDetailses=new ArrayList<JobDetails>();
-            JobsQuery jobsQuery=new JobsQuery();
-            for(ParseObject o:jobsQuery.getJobs()){
-                JobDetails _jd = new JobDetails( o.getObjectId(),o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"));
+        if (jobDetailses == null) {
+            jobDetailses = new ArrayList<JobDetails>();
+            JobsQuery jobsQuery = new JobsQuery();
+            for (ParseObject o : jobsQuery.getJobs()) {
+                JobDetails _jd = new JobDetails(o.getObjectId(), o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"));
                 jobDetailses.add(_jd);
             }
         }
 
-        ArrayList<String> groupString=new ArrayList<String>();
-        for(JobDetails jd:jobDetailses){
+        ArrayList<String> groupString = new ArrayList<String>();
+        for (JobDetails jd : jobDetailses) {
             groupString.add(jd.getJobTitle());
         }
 
-        Map<String, List<String>> childData=new HashMap<String, List<String>>();
-        for(JobDetails jd:jobDetailses){
-            List<String> _temp=new ArrayList<String>();
-            _temp.add("Description: "+jd.getJobDesc());
-            _temp.add("Location: "+jd.getJobLocation());
-            childData.put(jd.getJobTitle(),_temp);
+        Map<String, List<String>> childData = new HashMap<String, List<String>>();
+        for (JobDetails jd : jobDetailses) {
+            List<String> _temp = new ArrayList<String>();
+            _temp.add("Description: " + jd.getJobDesc());
+            _temp.add("Location: " + jd.getJobLocation());
+            childData.put(jd.getJobTitle(), _temp);
         }
+
         listView = (ExpandableListView) jobsView.findViewById(R.id.expandableListView);
         ExpandableListAdapter expListAdapter = new ExpandableListAdapter(getActivity(), groupString, childData);
 
@@ -71,23 +74,60 @@ public class Jobs extends android.support.v4.app.Fragment {
 
         listView.setIndicatorBounds(width - getDipsFromPixel(35), width
                 - getDipsFromPixel(5));
-        sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-        nearByJobs=(TextView)jobsView.findViewById(R.id.textView11);
+        nearByJobs = (TextView) jobsView.findViewById(R.id.textView11);
         nearByJobs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               /*
                Bring up a new map
                */
-                JobLoacationFragment newFragment =  new JobLoacationFragment();;
+                JobLoacationFragment newFragment = new JobLoacationFragment();
+                ;
                 android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_Container, newFragment);
+                Bundle extras=new Bundle();
+                extras.putCharSequence("queryType", "Location");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
 
+        searchView = (SearchView) jobsView.findViewById(R.id.searchView);
+        //searchView.setQueryHint("SearchView");
+
+        //*** setOnQueryTextFocusChangeListener ***
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                JobLoacationFragment newFragment = new JobLoacationFragment();
+                ;
+                android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_Container, newFragment);
+                Bundle extras=new Bundle();
+                extras.putCharSequence("queryType", "Search");
+                extras.putCharSequence("queryString", query);
+                newFragment.setArguments(extras);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return jobsView;
     }
 
@@ -212,10 +252,12 @@ public class Jobs extends android.support.v4.app.Fragment {
             return true;
         }
     }
+
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
 
     }
+
     public int getDipsFromPixel(float pixels) {
         // Get the screen's density scale
         final float scale = getResources().getDisplayMetrics().density;

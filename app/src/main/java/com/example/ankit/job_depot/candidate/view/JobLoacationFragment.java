@@ -41,7 +41,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     private SupportMapFragment fragment;
     private GoogleMap map;
     private Context context;
-
+    private Bundle extras;
     private List<CBJobs> nearbyJobs;
     private CareerBuilderAPIHelper careerBuilderAPIHelper;
     private List<Address> address;
@@ -53,7 +53,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         nearbyJobs = new ArrayList<CBJobs>();
         careerBuilderAPIHelper = new CareerBuilderAPIHelper();
-
+        extras =getArguments();
         return inflater.inflate(R.layout.activity_maps, container, false);
     }
 
@@ -67,8 +67,6 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
             fragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map, fragment).commit();
         }
-
-
     }
 
     @Override
@@ -95,9 +93,20 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                     }
 
                     Log.i("Current Location: ", address.toString());
-                    String city = address.get(0).getAddressLine(2).split(",")[0];
-                    Log.i(TAG, city);
-                    new getNearByJobs().execute(city);
+
+                    if(extras.containsKey("queryType")){
+                        if(extras.getCharSequence("queryType").equals("Location")){
+                            String city = address.get(0).getAddressLine(2).split(",")[0];
+                            Log.i(TAG, city);
+                            new getNearByJobs().execute(city);
+                        }
+                        else if(extras.getCharSequence("queryType").equals("Search")){
+                            /*
+                            Implement this method
+                             */
+                        }
+                    }
+
 
                     LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -213,4 +222,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         };
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, locationListener);
     }
+
+
+
 }

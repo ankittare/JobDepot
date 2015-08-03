@@ -19,6 +19,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class AppliedCandidatesList extends android.support.v4.app.Fragment {
 
     private ListView listView;
     private String employerName;
+    List<ParseObject> applicationDetails = new ArrayList<ParseObject>();
     public AppliedCandidatesList() {
         // Required empty public constructor
     }
@@ -49,28 +51,38 @@ public class AppliedCandidatesList extends android.support.v4.app.Fragment {
         Log.d("Jobiiid", getJobIDs.toString());
         Log.d("Jobiiid", "hello" + getJobIDs.isEmpty()+getJobIDs.size());
 
-        Map<String , List<ParseObject>> candidateDetails = new HashMap<String , List<ParseObject>>();
-        if(!getJobIDs.isEmpty()) {
-            List<String> jobIDs = new ArrayList<String>();
-            for (ParseObject ids : getJobIDs) {
-                jobIDs.add(ids.getObjectId());
-                Log.d("Ankadf", "hello" + ids.getObjectId());
-                List<ParseObject> candidateList = o.getAppliedCandidateIDs(ids.getObjectId());
+        //List<ParseObject> applicationDetails = new ArrayList<ParseObject>();
 
-                List<String> candID = new ArrayList<String>();
-                List<ParseObject> cDetails=null;
-                for(ParseObject candidateID: candidateList) {
-                    candID.add(candidateID.getString("studentCandidateID"));
-                    cDetails = o.getCandidateDetails(candidateID.getString("studentCandidateID"));
-
-                }
-                Log.d("Ankadf", "hello" + ids.getObjectId());
-                if(cDetails != null && !(cDetails).toString().equals("[]")) {
-                    Log.d("candidateDetails", "hello " + cDetails.toString());
-                    candidateDetails.put(ids.getObjectId().toString(), cDetails);
-                }
+        if(!getJobIDs.isEmpty()){
+            List<String> jobIDs = new ArrayList<>();
+            for(ParseObject ids : getJobIDs) {
+                applicationDetails.addAll(o.getAppliedCandidateIDs(ids.getObjectId()));
+                Log.d("applicationdetails",applicationDetails.toString());
             }
         }
+
+//        Map<String , List<ParseObject>> candidateDetails = new LinkedHashMap<String , List<ParseObject>>();
+//        if(!getJobIDs.isEmpty()) {
+//            List<String> jobIDs = new ArrayList<String>();
+//            for (ParseObject ids : getJobIDs) {
+//                jobIDs.add(ids.getObjectId());
+//                Log.d("Ankadf", "hello" + ids.getObjectId());
+//                List<ParseObject> candidateList = o.getAppliedCandidateIDs(ids.getObjectId());
+//
+//                List<String> candID = new ArrayList<String>();
+//                List<ParseObject> cDetails=null;
+//                for(ParseObject candidateID: candidateList) {
+//                    candID.add(candidateID.getString("studentCandidateID"));
+//                    cDetails = o.getCandidateDetails(candidateID.getString("studentCandidateID"));
+//
+//                }
+//                Log.d("Ankadf", "hello" + ids.getObjectId());
+//                if(cDetails != null && !(cDetails).toString().equals("[]")) {
+//                    Log.d("candidateDetails", "hello " + cDetails.toString());
+//                    candidateDetails.put(ids.getObjectId().toString(), cDetails);
+//                }
+//            }
+//        }
 //        Log.d("Adfa", listView.toString());
 //        Log.d("Abhartha -cand", candidateList.toString());
 //        Log.d("Abhartahn", getActivity().toString());
@@ -82,21 +94,31 @@ public class AppliedCandidatesList extends android.support.v4.app.Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
-//                String candidateName = candidateList.get(position).get("username").toString();
-//                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("CandidateName", candidateName);
-//                editor.commit();
+                EmployerHistory o = new EmployerHistory();
+                ParseObject candidateDetails = o.getSingleCandidate(applicationDetails.get(position).getString("studentCandidateID"));
+                Log.d("candidateDetails", candidateDetails.toString());
 
-//                CandidateDetails newFragment = new CandidateDetails();
-//                //Toast.makeText(getActivity().getApplicationContext(), "Yea!!! click ho gae called " + position, Toast.LENGTH_SHORT).show();
-//
-//                android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.CandidateDetails, newFragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
+                String candidateName = candidateDetails.get("username").toString();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("CandidateName", candidateName);
+                editor.putString("CandidateID", applicationDetails.get(position).getString("studentCandidateID"));
+                editor.putString("JobID", applicationDetails.get(position).getString("jobID"));
+                editor.commit();
+
+                CandidateDetails newFragment = new CandidateDetails();
+                //Toast.makeText(getActivity().getApplicationContext(), "Yea!!! click ho gae called " + position, Toast.LENGTH_SHORT).show();
+
+                android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.CandidateDetails, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
+        listView.setAdapter(new FillAppliedCandidateList(getActivity(), applicationDetails));
+
+        LinearLayout mainLayout=(LinearLayout)getActivity().findViewById(R.id.searchcandidatefragmenttohide);
+        mainLayout.setVisibility(LinearLayout.GONE);
         return  jobsView;
     }
 

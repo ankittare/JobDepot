@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.example.ankit.job_depot.employer.view.CandidateSearch.CandidateDetails"
     android:orientation="vertical"
     android:id="@+id/CandidateDetailsFragment"
@@ -20,7 +20,8 @@
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="1">
 
     <ImageView
         android:layout_width="100dp"
@@ -29,13 +30,13 @@
         android:src="@android:drawable/ic_menu_search"
         android:layout_margin="20dp" />
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewName"
         android:layout_gravity="center"
-        android:layout_margin="40dp"
+        android:layout_margin="20dp"
         android:textSize="25dp"
         android:textColor="#ffff4587" />
 </LinearLayout>

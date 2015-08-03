@@ -28,11 +28,4 @@
         android:paddingTop="70dp"
         android:layout_below="@+id/textViewJobHistory" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
-        android:layout_below="@+id/textViewJobHistory"
-        android:layout_alignParentRight="true" />
 </RelativeLayout>

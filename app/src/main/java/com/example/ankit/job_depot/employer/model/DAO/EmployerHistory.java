@@ -238,4 +238,29 @@ public class EmployerHistory {
         Log.d("objectID", result.toString());
         return result;
     }
+
+    public ParseObject getSingleCandidate(String parseObject) {
+        ParseObject result=null;
+        ParseQuery query = ParseQuery.getQuery("candidateDetails");
+        query.whereEqualTo("objectId", parseObject);
+        try {
+            result=query.get(parseObject);
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public ParseObject getSingleJobDetail(String parseObject) {
+        ParseObject result=null;
+        ParseQuery query = ParseQuery.getQuery("JobDetails");
+        query.whereEqualTo("objectId", parseObject);
+        try {
+            result=query.get(parseObject);
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

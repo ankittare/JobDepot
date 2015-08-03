@@ -76,7 +76,7 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
         college.setText(candidateDetail.getString("education"));
         imageUrl = candidateDetail.getString("imageURL");
 
-        if(imageUrl == "") {
+        if(!(imageUrl == null)) {
             new ImageLoadTask(imageUrl, candidateImage).execute();
         }
         btnCallCandidate.setOnClickListener(new View.OnClickListener() {

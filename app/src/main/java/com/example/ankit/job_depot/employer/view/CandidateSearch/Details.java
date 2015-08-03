@@ -72,7 +72,7 @@ public class Details extends android.support.v4.app.Fragment {
         experience.setText(candidateDetail.getString("workexp"));
         college.setText(candidateDetail.getString("education"));
         imageUrl = candidateDetail.getString("imageURL");
-        if(imageUrl == "") {
+        if(!(imageUrl == null)) {
             new ImageLoadTask(imageUrl, candidateImage).execute();
         }
         btnCallCandidate.setOnClickListener(new View.OnClickListener() {

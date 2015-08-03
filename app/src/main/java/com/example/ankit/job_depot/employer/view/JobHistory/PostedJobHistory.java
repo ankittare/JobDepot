@@ -128,8 +128,6 @@ public class PostedJobHistory extends Fragment {
                 - getDipsFromPixel(5));
         //sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 //        Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
 //        btnUpdate.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
@@ -143,26 +141,6 @@ public class PostedJobHistory extends Fragment {
 //                ft.commit();
 //            }
 //        });
-=======
-=======
->>>>>>> origin/master
-        /*Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft = manager.beginTransaction();
-                Fragment newFragment = myfragment;
-                myfragment.onDestroy();
-                ft.remove(myfragment);
-                ft.replace(container.getId(),myfragment);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });*/
-<<<<<<< HEAD
->>>>>>> origin/master
-=======
->>>>>>> origin/master
         return jobsView;
     }
 

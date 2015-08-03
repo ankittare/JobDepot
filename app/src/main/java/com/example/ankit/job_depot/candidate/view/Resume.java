@@ -109,10 +109,15 @@ public class Resume extends Fragment {
                     pictureURL = pictureURL.replace("\\", "");
                     DownloadImageTask downloadImageTask = new DownloadImageTask(imageView);
                     downloadImageTask.execute(pictureURL);
+                    /*
+                    Saving Picture URL to Parse
+                     */
+
                     editor.putString("pictureURL", pictureURL);
                     imageView = downloadImageTask.getBmImage();
                     textView.setText(jsonObject.get("firstName").toString() + "\n" + jsonObject.get("headline"));
                     CandidateQuery candidateQuery = new CandidateQuery();
+                    candidateQuery.savePicture(parseUsername, pictureURL);
                     if (!sharedPreferences.contains("username")) {
                         editor.putString("username", parseUsername);
                         if (new AuthQuery().verifyCredential(parseUsername) == false) {

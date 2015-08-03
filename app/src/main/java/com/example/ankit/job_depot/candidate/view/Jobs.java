@@ -87,11 +87,11 @@ public class Jobs extends android.support.v4.app.Fragment {
                Bring up a new map
                */
                 JobLoacationFragment newFragment = new JobLoacationFragment();
-                ;
                 android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_Container, newFragment);
                 Bundle extras = new Bundle();
                 extras.putCharSequence("queryType", "Location");
+                newFragment.setArguments(extras);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -282,7 +282,6 @@ public class Jobs extends android.support.v4.app.Fragment {
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
 
 }
 

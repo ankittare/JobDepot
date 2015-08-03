@@ -7,22 +7,17 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
-import com.google.android.gms.tagmanager.Container;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -133,7 +128,22 @@ public class PostedJobHistory extends Fragment {
                 - getDipsFromPixel(5));
         //sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-        Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
+<<<<<<< HEAD
+//        Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
+//        btnUpdate.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                FragmentManager manager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction ft = manager.beginTransaction();
+//                Fragment newFragment = myfragment;
+//                myfragment.onDestroy();
+//                ft.remove(myfragment);
+//                ft.replace(container.getId(),myfragment);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            }
+//        });
+=======
+        /*Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
@@ -145,7 +155,8 @@ public class PostedJobHistory extends Fragment {
                 ft.addToBackStack(null);
                 ft.commit();
             }
-        });
+        });*/
+>>>>>>> origin/master
         return jobsView;
     }
 

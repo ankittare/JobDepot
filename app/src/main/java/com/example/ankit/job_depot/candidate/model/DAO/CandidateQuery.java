@@ -78,4 +78,25 @@ public class CandidateQuery {
         return true;
     }
 
+    public Boolean savePicture(@NonNull String username, @NonNull String pictureURL){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateDetails");
+        query.whereEqualTo("username", username);
+        ParseObject newUser= null;
+        try {
+            newUser = query.getFirst();
+            newUser.put("imageURL", pictureURL);
+            newUser.put("skills", newUser.getString("skills"));
+            newUser.put("education", newUser.getString("education"));
+            newUser.put("password", newUser.getString("password"));
+            newUser.put("workexp", newUser.getString("workexp"));
+            newUser.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }catch(NullPointerException ne){
+            ne.printStackTrace();
+        }
+        return true;
+    }
+
 }

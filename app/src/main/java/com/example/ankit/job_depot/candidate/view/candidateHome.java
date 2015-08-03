@@ -95,6 +95,8 @@ public class candidateHome extends ActionBarActivity implements ActionBar.TabLis
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id==R.id.logout)
+            finish();
 
         return super.onOptionsItemSelected(item);
     }

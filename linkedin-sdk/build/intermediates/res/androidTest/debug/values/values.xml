@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/Users/anjali/Documents/JobDepot/linkedin-sdk/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Ankit/Documents/Programming/JobDepot/linkedin-sdk/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <string name="update_linkedin_app_cancel">Cancel</string>
     <string name="update_linkedin_app_download">Download</string>

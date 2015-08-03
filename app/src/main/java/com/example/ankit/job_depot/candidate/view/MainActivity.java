@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         Parse Initialisation
          */
 
-        Parse.enableLocalDatastore(this);
+        Parse.enableLocalDatastore(getApplicationContext());
         Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
 
         /*

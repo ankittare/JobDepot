@@ -1,12 +1,10 @@
 package com.example.ankit.job_depot.employer.view.CandidateSearch;
 
-
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,20 +24,19 @@ import com.parse.ParseQuery;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by anjali on 8/3/15.
  */
-public class CandidateDetails extends android.support.v4.app.Fragment {
+public class Details extends android.support.v4.app.Fragment {
 
     String imageUrl;
     TextView candidateName, skills, experience, college;
     Button btnCallCandidate;
     String candiName,jobID,candidateID;
     ImageView candidateImage;
-    public CandidateDetails() {
+    public Details() {
         // Required empty public constructor
     }
 
@@ -68,14 +65,13 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
 
         EmployerHistory candidateDetails = new EmployerHistory();
         Log.d("Abharthakjkljkjl", candiName);
-        ParseObject candidateDetail = candidateDetails.getSingleCandidate(candidateID);
+        ParseObject candidateDetail = candidateDetails.getCandidate(candiName);
 
         candidateName.setText(candidateDetail.getString("username"));
         skills.setText(candidateDetail.getString("skills"));
         experience.setText(candidateDetail.getString("workexp"));
         college.setText(candidateDetail.getString("education"));
         imageUrl = candidateDetail.getString("imageURL");
-
         if(imageUrl == "") {
             new ImageLoadTask(imageUrl, candidateImage).execute();
         }
@@ -83,21 +79,21 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 if(!jobID.equals("")) {
-                    ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
-                    query.whereEqualTo("studentCandidateID", candidateID);
-                    query.whereEqualTo("jobID", jobID);
-                    query.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> list, com.parse.ParseException e) {
-                            if (e == null) {
-                                for (ParseObject nameObj : list) {
-                                    nameObj.put("applicationStatus", "Accepted");
-                                    nameObj.saveInBackground();
-                                    Toast.makeText(getActivity().getApplicationContext(), "Called for interview.",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        }
-                    });
+//                    ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
+//                    query.whereEqualTo("studentCandidateID", candidateID);
+//                    query.whereEqualTo("jobID", jobID);
+//                    query.findInBackground(new FindCallback<ParseObject>() {
+//                        @Override
+//                        public void done(List<ParseObject> list, com.parse.ParseException e) {
+//                            if (e == null) {
+//                                for (ParseObject nameObj : list) {
+//                                    nameObj.put("applicationStatus", "Accepted");
+//                                    nameObj.saveInBackground();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Called for interview.", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        }
+//                    });
                 }
             }
         });

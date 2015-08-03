@@ -58,7 +58,7 @@ public class CandidateList extends android.support.v4.app.Fragment {
                 editor.putString("CandidateName", candidateName);
                 editor.commit();
 
-                CandidateDetails newFragment = new CandidateDetails();
+                Details newFragment = new Details();
                 //Toast.makeText(getActivity().getApplicationContext(), "Yea!!! click ho gae called " + position, Toast.LENGTH_SHORT).show();
 
                 android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

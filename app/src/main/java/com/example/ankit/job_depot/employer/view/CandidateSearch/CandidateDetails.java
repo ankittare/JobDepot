@@ -138,4 +138,10 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        LinearLayout mainLayout=(LinearLayout)getActivity().findViewById(R.id.CandidateDetailstohide);
+        mainLayout.setVisibility(LinearLayout.VISIBLE);
+    }
 }

@@ -122,5 +122,10 @@ public class AppliedCandidatesList extends android.support.v4.app.Fragment {
         return  jobsView;
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        LinearLayout mainLayout=(LinearLayout)getActivity().findViewById(R.id.searchcandidatefragmenttohide);
+        mainLayout.setVisibility(LinearLayout.VISIBLE);
+    }
 }

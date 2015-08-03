@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
@@ -28,7 +29,9 @@ public class SearchCandidates extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View jobsView = inflater.inflate(R.layout.fragment_search_candidates, container, false);
+
         SearchField = (EditText)jobsView.findViewById(R.id.editTextSearch);
         SearchLoc = (EditText)jobsView.findViewById(R.id.editTextSearchByLocation);
         SearchSkills = (EditText)jobsView.findViewById(R.id.editTextSearchSkills);

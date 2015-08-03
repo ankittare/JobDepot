@@ -15,14 +15,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ankit.job_depot.R;
 import com.example.ankit.job_depot.employer.model.DAO.EmployerHistory;
+import com.parse.FindCallback;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +37,7 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
     String imageUrl;
     TextView candidateName, skills, experience, college;
     Button btnCallCandidate;
-    String candiName;
+    String candiName,jobID,candidateID;
     ImageView candidateImage;
     public CandidateDetails() {
         // Required empty public constructor
@@ -46,6 +51,8 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
         candiName = sharedPreferences.getString("CandidateName", "ankit");
+        jobID = sharedPreferences.getString("JobID", "");
+        candidateID = sharedPreferences.getString("CandidateID", "");
 
         candidateName = (TextView) jobsView.findViewById(R.id.textViewName);
         skills = (TextView) jobsView.findViewById(R.id.textViewSkills);
@@ -61,7 +68,7 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
 
         EmployerHistory candidateDetails = new EmployerHistory();
         Log.d("Abharthakjkljkjl", candiName);
-        ParseObject candidateDetail = candidateDetails.getCandidate(candiName);
+        ParseObject candidateDetail = candidateDetails.getSingleCandidate(candidateID);
 
         candidateName.setText(candidateDetail.getString("username"));
         skills.setText(candidateDetail.getString("skills"));
@@ -70,6 +77,28 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
         imageUrl = candidateDetail.getString("imageURL");
 
         new ImageLoadTask(imageUrl, candidateImage).execute();
+        btnCallCandidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!jobID.equals("")) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("candidateList");
+                    query.whereEqualTo("studentCandidateID", candidateID);
+                    query.whereEqualTo("jobID", jobID);
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> list, com.parse.ParseException e) {
+                            if (e == null) {
+                                for (ParseObject nameObj : list) {
+                                    nameObj.put("applicationStatus", "Accepted");
+                                    nameObj.saveInBackground();
+                                    Toast.makeText(getActivity().getApplicationContext(), "Called for interview.",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
         return  jobsView;
     }

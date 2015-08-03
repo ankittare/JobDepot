@@ -129,6 +129,7 @@ public class PostedJobHistory extends Fragment {
         //sharedPreferences= PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //        Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
 //        btnUpdate.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View v) {
@@ -143,6 +144,8 @@ public class PostedJobHistory extends Fragment {
 //            }
 //        });
 =======
+=======
+>>>>>>> origin/master
         /*Button btnUpdate = (Button) jobsView.findViewById(R.id.button2);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -156,6 +159,9 @@ public class PostedJobHistory extends Fragment {
                 ft.commit();
             }
         });*/
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
         return jobsView;
     }

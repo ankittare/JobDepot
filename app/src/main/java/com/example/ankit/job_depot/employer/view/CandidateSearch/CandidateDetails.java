@@ -91,9 +91,10 @@ public class CandidateDetails extends android.support.v4.app.Fragment {
                         public void done(List<ParseObject> list, com.parse.ParseException e) {
                             if (e == null) {
                                 for (ParseObject nameObj : list) {
-                                    nameObj.put("applicationStatus", "Accepted");
+                                    nameObj.put("status", "Accepted");
                                     nameObj.saveInBackground();
                                     Toast.makeText(getActivity().getApplicationContext(), "Called for interview.",Toast.LENGTH_SHORT).show();
+                                    btnCallCandidate.setVisibility(View.GONE);
                                 }
                             }
                         }

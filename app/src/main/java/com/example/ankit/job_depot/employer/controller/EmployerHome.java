@@ -97,7 +97,9 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_settings) {
             return true;
         }
-
+        if(id==R.id.logout) {
+           finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -216,5 +218,4 @@ public class EmployerHome extends ActionBarActivity implements ActionBar.TabList
             return rootView;
         }
     }
-
 }

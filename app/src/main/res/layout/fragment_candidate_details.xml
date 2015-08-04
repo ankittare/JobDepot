@@ -28,17 +28,19 @@
         android:layout_height="100dp"
         android:id="@+id/imageViewCandidate"
         android:src="@android:drawable/ic_menu_search"
-        android:layout_margin="20dp" />
+        android:layout_margin="5dp" />
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/textViewName"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
+        android:layout_gravity="center_vertical|left"
+        android:layout_margin="5dp"
         android:textSize="25dp"
-        android:textColor="#ffff4587" />
+        android:textColor="#ffff4587"
+        android:gravity="left"
+        android:enabled="false" />
 </LinearLayout>
 
 

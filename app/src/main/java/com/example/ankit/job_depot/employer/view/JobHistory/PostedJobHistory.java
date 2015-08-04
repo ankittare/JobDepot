@@ -91,7 +91,11 @@ public class PostedJobHistory extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyData", getActivity().MODE_PRIVATE);
         employerName = sharedPreferences.getString("employerName", "ankitb");
 
-            jobDetails=new ArrayList<JobDetails>();
+
+        if(jobDetails!=null){
+            jobDetails.clear();
+        }
+        jobDetails=new ArrayList<JobDetails>();
             EmployerHistory jobsQuery=new EmployerHistory();
             for(ParseObject o:jobsQuery.getJobs(employerName)) {
                 JobDetails _jd = new JobDetails(o.getObjectId(), o.getString("jobName"), o.getString("jobDesc"), o.getString("jobLocation"),

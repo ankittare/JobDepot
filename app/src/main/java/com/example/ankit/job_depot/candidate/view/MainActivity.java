@@ -47,9 +47,13 @@ public class MainActivity extends Activity {
         /*
         Parse Initialisation
          */
-
-        Parse.enableLocalDatastore(getApplicationContext());
-        Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
+        try{
+            Parse.enableLocalDatastore(getApplicationContext());
+            Parse.initialize(this, "ftqZNLU8FZ8PPApaRGSZbW99xYERIqw0cWaNsKuh", "LQxbAOhhPdFDjiG3Gb1lQolW6fEgXCO94zadYO27");
+        }
+        catch(IllegalStateException ise){
+            ise.printStackTrace();
+        }
 
         /*
         Initialize View

@@ -2,7 +2,6 @@ package com.example.ankit.job_depot.candidate.view;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -47,7 +46,10 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     private List<CBJobs> nearbyJobs;
     private CareerBuilderAPIHelper careerBuilderAPIHelper;
     private List<Address> address;
-
+    private String QUERY_TYPE_LOCATION = "Location";
+    private String QUERY_TYPE_KEYWORD = "Keywords";
+    LocationManager locationManager;
+    LocationListener locationListener;
     public JobLoacationFragment() {
     }
 
@@ -74,17 +76,16 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
-        LocationManager locationManager;
-        LocationListener locationListener;
+
         super.onResume();
         if (map == null) {
             map = fragment.getMap();
 
-            Criteria crit = new Criteria();
-            crit.setAccuracy(Criteria.ACCURACY_FINE);
+            //Criteria crit = new Criteria();
+            //crit.setAccuracy(Criteria.ACCURACY_FINE);
 
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            String best = locationManager.getBestProvider(crit, false);
+            //String best = locationManager.getBestProvider(crit, false);
             //locationListener=new CurrentLocationListener();
 
             LatLng sydney = new LatLng(-33.867, 151.206);
@@ -108,29 +109,24 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                     }
 
                     Log.i("Current Location: ", address.toString());
-
-                    if (extras.containsKey("queryType")) {
-                        if (extras.getCharSequence("queryType").equals("Location")) {
-                            String city = address.get(0).getAddressLine(2).split(",")[0];
-                            Log.i(TAG, city);
-                            new getNearByJobs().execute(city);
-                        } else if (extras.getCharSequence("queryType").equals("Search")) {
-
-
-                        }
-                    }
-
                     LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
 
                     map.setMyLocationEnabled(true);
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 13));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 10));
                     map.addMarker(new MarkerOptions()
                                     .title(address.get(0).getAddressLine(0) + " " + address.get(0).getAddressLine(1))
                                     .position(loc)
                     );
+                    if (extras.containsKey("queryType")) {
+                        if (extras.getCharSequence("queryType").equals("Location")) {
+                            String city = address.get(0).getAddressLine(2).split(",")[0];
+                            Log.i(TAG, city);
+                            new getNearByJobs().execute(city, QUERY_TYPE_LOCATION);
+                        } else if (extras.getCharSequence("queryType").equals("Search")) {
+                            new getNearByJobs().execute(extras.getString("queryString"), QUERY_TYPE_KEYWORD);
+                        }
+                    }
                 }
-
-
                 public void onStatusChanged(String provider, int status, Bundle extras) {
                 }
 
@@ -142,7 +138,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                     Toast.makeText(getActivity().getBaseContext(), "Provider Not Available!", Toast.LENGTH_LONG).show();
                 }
             };
-            locationManager.requestLocationUpdates(best, 1000, 0, locationListener);
+            locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 100000, 5, locationListener);
             //locationManager.removeUpdates(locationListener);
         }
     }
@@ -150,7 +146,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     public void onPause() {
         super.onPause();
         //locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        //locationManager.removeUpdates(locationListener);
+        locationManager.removeUpdates(locationListener);
     }
 
     private class getNearByJobs extends AsyncTask<String, String, String> {
@@ -168,7 +164,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
         @Override
         protected String doInBackground(String... params) {
             try {
-                careerBuilderAPIHelper.jobSearch(params[0]);
+                careerBuilderAPIHelper.jobSearch(params[0], params[1]);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ParserConfigurationException e) {
@@ -181,6 +177,42 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
     }
 
     private void showNearByJobs() {
+        try {
+            for (final CBJobs cbJobs : nearbyJobs) {
+                //Log.i(TAG, cbJobs.toString());
+                LatLng _jobLoc = new LatLng(Double.parseDouble(cbJobs.getLocationLatitude()), Double.parseDouble(cbJobs.getLocationLongitude()));
+                map.addMarker(new MarkerOptions()
+                        .title(cbJobs.getCompany())
+                        .snippet(cbJobs.getJobTitle())
+                        .position(_jobLoc));
+                map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                            /*
+                            Displaying company website for user to apply for this job
+                             */
+                        Log.i(TAG, "On long click");
+                        Log.i(TAG, cbJobs.getJobURL());
+                        Bundle extras = new Bundle();
+                        extras.putCharSequence("CompanyURL", cbJobs.getJobURL());
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Opening Webpage...",
+                                Toast.LENGTH_LONG).show();
+                        job_web_view newFragment = new job_web_view();
+                        newFragment.setArguments(extras);
+                        android.support.v4.app.FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.map, newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
+            }
+        } catch (ConcurrentModificationException c) {
+            c.printStackTrace();
+        }
+
+
+        /*
         LocationManager locationManager;
         LocationListener locationListener;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -199,7 +231,7 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
                             public void onMapLongClick(LatLng latLng) {
                             /*
                             Displaying company website for user to apply for this job
-                             */
+
                                 Log.i(TAG, "On long click");
                                 Log.i(TAG, cbJobs.getJobURL());
                                 Bundle extras = new Bundle();
@@ -238,30 +270,9 @@ public class JobLoacationFragment extends android.support.v4.app.Fragment {
 
             }
         };
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 10, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 5, locationListener);
     }
+        */
 
-    private class CurrentLocationListener implements LocationListener {
-        private final String TAG = getClass().getSimpleName();
-
-        @Override
-        public void onLocationChanged(Location location) {
-            Log.i(TAG, location.toString());
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.i(TAG, provider);
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            Log.i(TAG, provider);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            Log.i(TAG, provider);
-        }
     }
 }

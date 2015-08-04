@@ -39,10 +39,10 @@ public class CareerBuilderAPIHelper {
         return CBjobs;
     }
 
-    public void jobSearch(String query) throws ProtocolException, MalformedURLException, IOException, ParserConfigurationException, SAXException {
+    public void jobSearch(String query, String param) throws ProtocolException, MalformedURLException, IOException, ParserConfigurationException, SAXException {
         CBjobs=new ArrayList<CBJobs>();
         //URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&Location=" + query+"&Radius="+RADIUS);
-        URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&Location=" + query);
+        URL url = new URL(jobSearchURL + "?DeveloperKey=" + API_KEY + "&"+param+"=" + query);
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         //Log.i(TAG, connection.getResponseMessage());
